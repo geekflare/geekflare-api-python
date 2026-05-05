@@ -211,4 +211,5 @@ from geekflare_api.models.url2_pdf_response_dto import Url2PdfResponseDto as Url
 from geekflare_api.models.web_scrape_dto import WebScrapeDto as WebScrapeDto
 from geekflare_api.models.web_scrape_meta_dto import WebScrapeMetaDto as WebScrapeMetaDto
 from geekflare_api.models.web_scrape_response_dto import WebScrapeResponseDto as WebScrapeResponseDto
+from geekflare_api.client import GeekflareClient
 
