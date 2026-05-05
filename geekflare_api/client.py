@@ -25,7 +25,6 @@ class GeekflareClient:
     def __init__(self, api_key: str, base_url: str = "https://api.geekflare.com"):
         configuration = geekflare_api.Configuration(host=base_url)
         configuration.api_key["x-api-key"] = api_key
-        configuration.api_key_prefix["x-api-key"] = ""
         self._client = geekflare_api.ApiClient(configuration)
         self._api = ApiToolApi(self._client)
 
@@ -80,11 +79,8 @@ class GeekflareClient:
     def search(self, body: SearchRequestDto):
         return self._api.search(body)
 
-    def close(self):
-        self._client.close()
-
     def __enter__(self):
         return self
 
     def __exit__(self, *args):
-        self.close()
+        self._client.rest_client.pool_manager.clear()
