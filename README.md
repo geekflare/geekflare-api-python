@@ -12,10 +12,10 @@ pip install geekflare-api
 
 ```python
 from geekflare_api.client import GeekflareClient
-from geekflare_api.models import PingDto
+from geekflare_api.models import WebScrapeDto
 
 with GeekflareClient(api_key="your-api-key") as client:
-    result = client.ping(PingDto(url="https://google.com"))
+    result = client.web_scrape(WebScrapeDto(url="https://google.com"))
     print(result)
 ```
 
@@ -47,7 +47,7 @@ with GeekflareClient(api_key="your-api-key") as client:
 from geekflare_api.exceptions import ApiException
 
 try:
-    result = client.ping(PingDto(url="https://google.com"))
+    result = client.web_scrape(WebScrapeDto(url="https://google.com"))
 except ApiException as e:
     print(f"API error {e.status}: {e.reason}")
 ```
