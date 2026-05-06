@@ -15,7 +15,7 @@ from geekflare_api.client import GeekflareClient
 from geekflare_api.models import WebScrapeDto
 
 with GeekflareClient(api_key="your-api-key") as client:
-    result = client.web_scrape(WebScrapeDto(url="https://google.com"))
+    result = client.web_scrape(WebScrapeDto(url="https://toscrape.com/"))
     print(result)
 ```
 
@@ -47,7 +47,7 @@ with GeekflareClient(api_key="your-api-key") as client:
 from geekflare_api.exceptions import ApiException
 
 try:
-    result = client.web_scrape(WebScrapeDto(url="https://google.com"))
+    result = client.web_scrape(WebScrapeDto(url="https://toscrape.com/"))
 except ApiException as e:
     print(f"API error {e.status}: {e.reason}")
 ```
