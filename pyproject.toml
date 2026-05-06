@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "geekflare-api"
+version = "0.1.1"
+description = "Official Python SDK for Geekflare API"
+readme = "README.md"
+license = { text = "MIT" }
+authors = [{ name = "Geekflare", email = "support@geekflare.com" }]
+keywords = ["geekflare", "api", "sdk", "scraping", "screenshot", "dns", "search"]
+requires-python = ">=3.8"
+dependencies = [
+    "urllib3>=1.25.3",
+    "python-dateutil>=2.8.2",
+    "pydantic>=2.0.0",
+    "typing-extensions>=4.7.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/geekflare/geekflare-api-python"
+Documentation = "https://docs.geekflare.com/api/intro"
+Repository = "https://github.com/geekflare/geekflare-api-python"
+Issues = "https://github.com/geekflare/geekflare-api-python/issues"
