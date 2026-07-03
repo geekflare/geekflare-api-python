@@ -28,6 +28,9 @@ from geekflare_api.models.dns_sec_meta_dto import DnsSecMetaDto
 from geekflare_api.models.dns_sec_response_dto import DnsSecResponseDto
 from geekflare_api.models.extraction_schema_dto import ExtractionSchemaDto
 from geekflare_api.models.extraction_schema_dto_fields_inner import ExtractionSchemaDtoFieldsInner
+from geekflare_api.models.grounded_answer_data_dto import GroundedAnswerDataDto
+from geekflare_api.models.grounded_answer_response_dto import GroundedAnswerResponseDto
+from geekflare_api.models.grounded_source_dto import GroundedSourceDto
 from geekflare_api.models.health_response_dto import HealthResponseDto
 from geekflare_api.models.image_search_response_dto import ImageSearchResponseDto
 from geekflare_api.models.image_search_result_item_dto import ImageSearchResultItemDto
@@ -66,6 +69,7 @@ from geekflare_api.models.redirect_check_meta_dto import RedirectCheckMetaDto
 from geekflare_api.models.redirect_check_response_dto import RedirectCheckResponseDto
 from geekflare_api.models.redirect_hop_dto import RedirectHopDto
 from geekflare_api.models.screenshot_dto import ScreenshotDto
+from geekflare_api.models.screenshot_inline_dto import ScreenshotInlineDto
 from geekflare_api.models.screenshot_meta_dto import ScreenshotMetaDto
 from geekflare_api.models.screenshot_response_dto import ScreenshotResponseDto
 from geekflare_api.models.search200_response import Search200Response
@@ -96,4 +100,5 @@ from geekflare_api.models.url2_pdf_response_dto import Url2PdfResponseDto
 from geekflare_api.models.web_scrape_dto import WebScrapeDto
 from geekflare_api.models.web_scrape_meta_dto import WebScrapeMetaDto
 from geekflare_api.models.web_scrape_response_dto import WebScrapeResponseDto
+from geekflare_api.models.web_scrape_response_dto_data import WebScrapeResponseDtoData
 

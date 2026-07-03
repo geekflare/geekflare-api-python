@@ -27,7 +27,7 @@ class BaseErrorResponseDto(BaseModel):
     """
     BaseErrorResponseDto
     """ # noqa: E501
-    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1777874383873]})
+    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1778737930991]})
     api_status: StrictStr = Field(description="API status message", alias="apiStatus", json_schema_extra={"examples": ["success"]})
     api_code: Union[StrictFloat, StrictInt] = Field(description="API status code", alias="apiCode", json_schema_extra={"examples": [200]})
     message: StrictStr = Field(description="Error message", json_schema_extra={"examples": ["Invalid URL provided"]})

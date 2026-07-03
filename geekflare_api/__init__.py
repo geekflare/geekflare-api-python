@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.1.0"
+__version__ = "0.1.2"
 
 # Define package exports
 __all__ = [
@@ -43,6 +43,9 @@ __all__ = [
     "DnsSecResponseDto",
     "ExtractionSchemaDto",
     "ExtractionSchemaDtoFieldsInner",
+    "GroundedAnswerDataDto",
+    "GroundedAnswerResponseDto",
+    "GroundedSourceDto",
     "HealthResponseDto",
     "ImageSearchResponseDto",
     "ImageSearchResultItemDto",
@@ -81,6 +84,7 @@ __all__ = [
     "RedirectCheckResponseDto",
     "RedirectHopDto",
     "ScreenshotDto",
+    "ScreenshotInlineDto",
     "ScreenshotMetaDto",
     "ScreenshotResponseDto",
     "Search200Response",
@@ -111,6 +115,7 @@ __all__ = [
     "WebScrapeDto",
     "WebScrapeMetaDto",
     "WebScrapeResponseDto",
+    "WebScrapeResponseDtoData",
 ]
 
 # import apis into sdk package
@@ -143,6 +148,9 @@ from geekflare_api.models.dns_sec_meta_dto import DnsSecMetaDto as DnsSecMetaDto
 from geekflare_api.models.dns_sec_response_dto import DnsSecResponseDto as DnsSecResponseDto
 from geekflare_api.models.extraction_schema_dto import ExtractionSchemaDto as ExtractionSchemaDto
 from geekflare_api.models.extraction_schema_dto_fields_inner import ExtractionSchemaDtoFieldsInner as ExtractionSchemaDtoFieldsInner
+from geekflare_api.models.grounded_answer_data_dto import GroundedAnswerDataDto as GroundedAnswerDataDto
+from geekflare_api.models.grounded_answer_response_dto import GroundedAnswerResponseDto as GroundedAnswerResponseDto
+from geekflare_api.models.grounded_source_dto import GroundedSourceDto as GroundedSourceDto
 from geekflare_api.models.health_response_dto import HealthResponseDto as HealthResponseDto
 from geekflare_api.models.image_search_response_dto import ImageSearchResponseDto as ImageSearchResponseDto
 from geekflare_api.models.image_search_result_item_dto import ImageSearchResultItemDto as ImageSearchResultItemDto
@@ -181,6 +189,7 @@ from geekflare_api.models.redirect_check_meta_dto import RedirectCheckMetaDto as
 from geekflare_api.models.redirect_check_response_dto import RedirectCheckResponseDto as RedirectCheckResponseDto
 from geekflare_api.models.redirect_hop_dto import RedirectHopDto as RedirectHopDto
 from geekflare_api.models.screenshot_dto import ScreenshotDto as ScreenshotDto
+from geekflare_api.models.screenshot_inline_dto import ScreenshotInlineDto as ScreenshotInlineDto
 from geekflare_api.models.screenshot_meta_dto import ScreenshotMetaDto as ScreenshotMetaDto
 from geekflare_api.models.screenshot_response_dto import ScreenshotResponseDto as ScreenshotResponseDto
 from geekflare_api.models.search200_response import Search200Response as Search200Response
@@ -211,5 +220,5 @@ from geekflare_api.models.url2_pdf_response_dto import Url2PdfResponseDto as Url
 from geekflare_api.models.web_scrape_dto import WebScrapeDto as WebScrapeDto
 from geekflare_api.models.web_scrape_meta_dto import WebScrapeMetaDto as WebScrapeMetaDto
 from geekflare_api.models.web_scrape_response_dto import WebScrapeResponseDto as WebScrapeResponseDto
-from geekflare_api.client import GeekflareClient
+from geekflare_api.models.web_scrape_response_dto_data import WebScrapeResponseDtoData as WebScrapeResponseDtoData
 

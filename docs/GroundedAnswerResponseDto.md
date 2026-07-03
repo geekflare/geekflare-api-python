@@ -1,4 +1,4 @@
-# Search200Response
+# GroundedAnswerResponseDto
 
 
 ## Properties
@@ -14,19 +14,19 @@ Name | Type | Description | Notes
 ## Example
 
 ```python
-from geekflare_api.models.search200_response import Search200Response
+from geekflare_api.models.grounded_answer_response_dto import GroundedAnswerResponseDto
 
 # TODO update the JSON string below
 json = "{}"
-# create an instance of Search200Response from a JSON string
-search200_response_instance = Search200Response.from_json(json)
+# create an instance of GroundedAnswerResponseDto from a JSON string
+grounded_answer_response_dto_instance = GroundedAnswerResponseDto.from_json(json)
 # print the JSON string representation of the object
-print(Search200Response.to_json())
+print(GroundedAnswerResponseDto.to_json())
 
 # convert the object into a dict
-search200_response_dict = search200_response_instance.to_dict()
-# create an instance of Search200Response from a dict
-search200_response_from_dict = Search200Response.from_dict(search200_response_dict)
+grounded_answer_response_dto_dict = grounded_answer_response_dto_instance.to_dict()
+# create an instance of GroundedAnswerResponseDto from a dict
+grounded_answer_response_dto_from_dict = GroundedAnswerResponseDto.from_dict(grounded_answer_response_dto_dict)
 ```
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

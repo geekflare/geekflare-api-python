@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **var_date** | **str** | Published date (if available) | [optional] 
 **position** | **float** | Rank position | 
 **content** | **object** | Scraped cleaned HTML content from the result URL | [optional] 
+**thumbnail** | **object** | Thumbnail image URL (if available) | [optional] 
 
 ## Example
 

@@ -98,8 +98,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully checked for broken links |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -178,8 +178,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully retrieved DNS records |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**500** | DNS lookup failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -258,8 +258,10 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | DNSSEC test result retrieved successfully |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**500** | DNSSEC check failed. |  -  |
+**502** | DNSSEC query failed. |  -  |
+**504** | DNS server timed out. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -338,8 +340,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully ran Lighthouse audit |  -  |
-**400** | Bad request (e.g. invalid URL or parameters) |  -  |
-**500** | Internal server error while running Lighthouse audit |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
+**500** | Lighthouse audit failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -418,8 +421,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Load time retrieved successfully |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
+**500** | Failed to measure page load time. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -498,8 +502,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully scraped webpage meta |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**422** | No metadata found. |  -  |
+**500** | Crawling failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -578,8 +583,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Site status retrieved successfully |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
+**500** | Failed to check for mixed content. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -658,8 +664,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | MTR test completed successfully |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**500** | MTR is not installed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -738,8 +744,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Open ports retrieved successfully |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**408** | Port scan timed out. |  -  |
+**500** | Port scan failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -818,8 +825,8 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Ping test completed successfully |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**504** | Host is unreachable. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -898,8 +905,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully retrieved redirect chain |  -  |
-**400** | Bad request |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**429** | Too many redirects. |  -  |
+**500** | Redirect check failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -978,8 +986,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully captured screenshot |  -  |
-**400** | Bad request (e.g. invalid URL or parameters) |  -  |
-**500** | Internal server error while capturing screenshot |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
+**500** | Screenshot generation failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -988,7 +997,7 @@ Name | Type | Description  | Notes
 
 Search API for AI Agents & LLMs
 
-Search the web for AI, remove noise like ads and unnecessary HTML, and return clean data in JSON, Markdown, or HTML formats, with support for image search and news.
+Structured search results from the web or news. Strips out ads and HTML noise to provide pure data in JSON, Markdown, or HTML. Fully supports AI-grounded answers, search-with-scrape, image search, and targeted Web or News sourcing.
 
 ### Example
 
@@ -1060,8 +1069,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Search results (format depends on request) |  -  |
-**400** | Bad request |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
+**500** | Search failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1140,8 +1150,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Site status retrieved successfully |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**429** | Too many redirects. |  -  |
+**500** | Site status check failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1220,8 +1231,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully retrieved TLS scan information |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**422** | TLS handshake failed. |  -  |
+**500** | TLS scan failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1300,8 +1312,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully captured Url2Pdf |  -  |
-**400** | Bad request (e.g. invalid URL or parameters) |  -  |
-**500** | Internal server error while capturing Url2Pdf |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
+**500** | PDF conversion failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
@@ -1380,8 +1393,9 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | Successfully scraped webpage |  -  |
-**400** | Bad request (invalid parameters) |  -  |
-**500** | Internal server error |  -  |
+**400** | Invalid URL. |  -  |
+**422** | Unable to connect to the target website. |  -  |
+**500** | Crawling failed. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

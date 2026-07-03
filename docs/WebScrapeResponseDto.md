@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 **api_status** | **str** | API status message | 
 **api_code** | **float** | API status code | 
 **meta** | [**WebScrapeMetaDto**](WebScrapeMetaDto.md) | Metadata about the request | 
-**data** | [**MetaScrapeResponseDtoData**](MetaScrapeResponseDtoData.md) |  | 
+**data** | [**WebScrapeResponseDtoData**](WebScrapeResponseDtoData.md) |  | 
 
 ## Example
 

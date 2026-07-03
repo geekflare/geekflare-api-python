@@ -19,8 +19,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Union
-from geekflare_api.models.meta_scrape_response_dto_data import MetaScrapeResponseDtoData
 from geekflare_api.models.web_scrape_meta_dto import WebScrapeMetaDto
+from geekflare_api.models.web_scrape_response_dto_data import WebScrapeResponseDtoData
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -29,11 +29,11 @@ class WebScrapeResponseDto(BaseModel):
     """
     WebScrapeResponseDto
     """ # noqa: E501
-    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1777874383873]})
+    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1783063255117]})
     api_status: StrictStr = Field(description="API status message", alias="apiStatus", json_schema_extra={"examples": ["success"]})
     api_code: Union[StrictFloat, StrictInt] = Field(description="API status code", alias="apiCode", json_schema_extra={"examples": [200]})
     meta: WebScrapeMetaDto = Field(description="Metadata about the request")
-    data: MetaScrapeResponseDtoData
+    data: WebScrapeResponseDtoData
     __properties: ClassVar[List[str]] = ["timestamp", "apiStatus", "apiCode", "meta", "data"]
 
     @field_validator('api_status')
@@ -104,7 +104,7 @@ class WebScrapeResponseDto(BaseModel):
             "apiStatus": obj.get("apiStatus"),
             "apiCode": obj.get("apiCode"),
             "meta": WebScrapeMetaDto.from_dict(obj["meta"]) if obj.get("meta") is not None else None,
-            "data": MetaScrapeResponseDtoData.from_dict(obj["data"]) if obj.get("data") is not None else None
+            "data": WebScrapeResponseDtoData.from_dict(obj["data"]) if obj.get("data") is not None else None
         })
         return _obj
 

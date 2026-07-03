@@ -32,7 +32,9 @@ class BrokenLinkSummaryDto(BaseModel):
     redirects: Union[StrictFloat, StrictInt] = Field(description="Number of redirect links (3xx status codes)", json_schema_extra={"examples": [2]})
     broken: Union[StrictFloat, StrictInt] = Field(description="Number of broken links (4xx status codes and DNS/network failures)", json_schema_extra={"examples": [1]})
     server_error: Union[StrictFloat, StrictInt] = Field(description="Number of server errors (5xx status codes)", alias="serverError", json_schema_extra={"examples": [0]})
-    __properties: ClassVar[List[str]] = ["total", "successful", "redirects", "broken", "serverError"]
+    forbidden: Union[StrictFloat, StrictInt] = Field(description="Number of forbidden links (403 status codes)", json_schema_extra={"examples": [0]})
+    timed_out: Union[StrictFloat, StrictInt] = Field(description="Number of timed-out links", alias="timedOut", json_schema_extra={"examples": [0]})
+    __properties: ClassVar[List[str]] = ["total", "successful", "redirects", "broken", "serverError", "forbidden", "timedOut"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -89,7 +91,9 @@ class BrokenLinkSummaryDto(BaseModel):
             "successful": obj.get("successful"),
             "redirects": obj.get("redirects"),
             "broken": obj.get("broken"),
-            "serverError": obj.get("serverError")
+            "serverError": obj.get("serverError"),
+            "forbidden": obj.get("forbidden"),
+            "timedOut": obj.get("timedOut")
         })
         return _obj
 

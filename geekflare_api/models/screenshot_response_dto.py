@@ -18,7 +18,8 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
+from geekflare_api.models.screenshot_inline_dto import ScreenshotInlineDto
 from geekflare_api.models.screenshot_meta_dto import ScreenshotMetaDto
 from typing import Optional, Set
 from typing_extensions import Self
@@ -28,12 +29,13 @@ class ScreenshotResponseDto(BaseModel):
     """
     ScreenshotResponseDto
     """ # noqa: E501
-    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1777874383873]})
+    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1783063255117]})
     api_status: StrictStr = Field(description="API status message", alias="apiStatus", json_schema_extra={"examples": ["success"]})
     api_code: Union[StrictFloat, StrictInt] = Field(description="API status code", alias="apiCode", json_schema_extra={"examples": [200]})
     meta: ScreenshotMetaDto = Field(description="Metadata about the request")
-    data: StrictStr = Field(description="Screenshot URL or base64 string", json_schema_extra={"examples": ["https://geekflare.com/tests/screenshot/kbi6d206g87ituahb7icwtpr.png"]})
-    __properties: ClassVar[List[str]] = ["timestamp", "apiStatus", "apiCode", "meta", "data"]
+    data: StrictStr = Field(description="URL of the captured screenshot", json_schema_extra={"examples": ["https://geekflare.com/tests/screenshot/kbi6d206g87ituahb7icwtpr.png"]})
+    inline: Optional[ScreenshotInlineDto] = Field(default=None, description="Inline Base64 image data. Present only when the request included `inline: true`.")
+    __properties: ClassVar[List[str]] = ["timestamp", "apiStatus", "apiCode", "meta", "data", "inline"]
 
     @field_validator('api_status')
     def api_status_validate_enum(cls, value):
@@ -84,6 +86,9 @@ class ScreenshotResponseDto(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of meta
         if self.meta:
             _dict['meta'] = self.meta.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of inline
+        if self.inline:
+            _dict['inline'] = self.inline.to_dict()
         return _dict
 
     @classmethod
@@ -100,7 +105,8 @@ class ScreenshotResponseDto(BaseModel):
             "apiStatus": obj.get("apiStatus"),
             "apiCode": obj.get("apiCode"),
             "meta": ScreenshotMetaDto.from_dict(obj["meta"]) if obj.get("meta") is not None else None,
-            "data": obj.get("data")
+            "data": obj.get("data"),
+            "inline": ScreenshotInlineDto.from_dict(obj["inline"]) if obj.get("inline") is not None else None
         })
         return _obj
 

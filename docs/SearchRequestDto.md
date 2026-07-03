@@ -16,6 +16,7 @@ Name | Type | Description | Notes
 **format** | **str** | Output format | [optional] [default to 'json']
 **scrape** | **bool** | scrape and extract content from SERP result URLs | [optional] [default to False]
 **scrape_limit** | **float** | Number of URLs to scrape (requires scrape: true) | [optional] [default to 3]
+**grounded_answer** | **bool** | Use AI to synthesize a grounded answer from search results. | [optional] [default to False]
 
 ## Example
 

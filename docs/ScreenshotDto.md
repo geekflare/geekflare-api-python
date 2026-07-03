@@ -25,6 +25,9 @@ Name | Type | Description | Notes
 **quality** | **float** | Image quality (for JPEG/WEBP) | [optional] 
 **scale_factor** | **float** | Device scale factor | [optional] 
 **capture_beyond_viewport** | **bool** | Capture beyond viewport if possible | [optional] 
+**selector** | **str** | CSS selector to capture only a specific element on the page. Supports class (.), ID (#), and attribute selectors. | [optional] 
+**fallback_to_full_page** | **bool** | If true and the selector is not found, falls back to a full-page screenshot instead of returning an error. Default: false. | [optional] [default to False]
+**inline** | **bool** | If true, includes a Base64-encoded image and data URI in the response. Useful for AI agents and LLMs that cannot fetch URLs. Default: false. | [optional] [default to False]
 
 ## Example
 

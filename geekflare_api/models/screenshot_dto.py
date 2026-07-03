@@ -48,7 +48,10 @@ class ScreenshotDto(BaseModel):
     quality: Optional[Union[Annotated[float, Field(le=100, strict=True, ge=10)], Annotated[int, Field(le=100, strict=True, ge=10)]]] = Field(default=None, description="Image quality (for JPEG/WEBP)", json_schema_extra={"examples": [90]})
     scale_factor: Optional[Union[Annotated[float, Field(le=5, strict=True, ge=0.1)], Annotated[int, Field(le=5, strict=True, ge=1)]]] = Field(default=None, description="Device scale factor", alias="scaleFactor", json_schema_extra={"examples": [1]})
     capture_beyond_viewport: Optional[StrictBool] = Field(default=None, description="Capture beyond viewport if possible", alias="captureBeyondViewport", json_schema_extra={"examples": [True]})
-    __properties: ClassVar[List[str]] = ["url", "device", "proxyCountry", "type", "fullPage", "blockAds", "hideCookie", "skipCaptcha", "addTimestamp", "pageHeight", "viewportWidth", "viewportHeight", "theme", "removeBackground", "highlightLinks", "delay", "disableAnimations", "quality", "scaleFactor", "captureBeyondViewport"]
+    selector: Optional[StrictStr] = Field(default=None, description="CSS selector to capture only a specific element on the page. Supports class (.), ID (#), and attribute selectors.", json_schema_extra={"examples": [".hero-section"]})
+    fallback_to_full_page: Optional[StrictBool] = Field(default=False, description="If true and the selector is not found, falls back to a full-page screenshot instead of returning an error. Default: false.", alias="fallbackToFullPage", json_schema_extra={"examples": [False]})
+    inline: Optional[StrictBool] = Field(default=False, description="If true, includes a Base64-encoded image and data URI in the response. Useful for AI agents and LLMs that cannot fetch URLs. Default: false.", json_schema_extra={"examples": [False]})
+    __properties: ClassVar[List[str]] = ["url", "device", "proxyCountry", "type", "fullPage", "blockAds", "hideCookie", "skipCaptcha", "addTimestamp", "pageHeight", "viewportWidth", "viewportHeight", "theme", "removeBackground", "highlightLinks", "delay", "disableAnimations", "quality", "scaleFactor", "captureBeyondViewport", "selector", "fallbackToFullPage", "inline"]
 
     @field_validator('device')
     def device_validate_enum(cls, value):
@@ -150,7 +153,10 @@ class ScreenshotDto(BaseModel):
             "disableAnimations": obj.get("disableAnimations"),
             "quality": obj.get("quality"),
             "scaleFactor": obj.get("scaleFactor"),
-            "captureBeyondViewport": obj.get("captureBeyondViewport")
+            "captureBeyondViewport": obj.get("captureBeyondViewport"),
+            "selector": obj.get("selector"),
+            "fallbackToFullPage": obj.get("fallbackToFullPage") if obj.get("fallbackToFullPage") is not None else False,
+            "inline": obj.get("inline") if obj.get("inline") is not None else False
         })
         return _obj
 

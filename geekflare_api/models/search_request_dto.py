@@ -39,7 +39,8 @@ class SearchRequestDto(BaseModel):
     format: Optional[StrictStr] = Field(default='json', description="Output format")
     scrape: Optional[StrictBool] = Field(default=False, description="scrape and extract content from SERP result URLs", json_schema_extra={"examples": [False]})
     scrape_limit: Optional[Union[Annotated[float, Field(le=10, strict=True, ge=1)], Annotated[int, Field(le=10, strict=True, ge=1)]]] = Field(default=3, description="Number of URLs to scrape (requires scrape: true)", alias="scrapeLimit", json_schema_extra={"examples": [3]})
-    __properties: ClassVar[List[str]] = ["query", "limit", "time", "location", "source", "category", "includeDomains", "excludeDomains", "format", "scrape", "scrapeLimit"]
+    grounded_answer: Optional[StrictBool] = Field(default=False, description="Use AI to synthesize a grounded answer from search results.", alias="groundedAnswer", json_schema_extra={"examples": [False]})
+    __properties: ClassVar[List[str]] = ["query", "limit", "time", "location", "source", "category", "includeDomains", "excludeDomains", "format", "scrape", "scrapeLimit", "groundedAnswer"]
 
     @field_validator('source')
     def source_validate_enum(cls, value):
@@ -132,7 +133,8 @@ class SearchRequestDto(BaseModel):
             "excludeDomains": obj.get("excludeDomains"),
             "format": obj.get("format") if obj.get("format") is not None else 'json',
             "scrape": obj.get("scrape") if obj.get("scrape") is not None else False,
-            "scrapeLimit": obj.get("scrapeLimit") if obj.get("scrapeLimit") is not None else 3
+            "scrapeLimit": obj.get("scrapeLimit") if obj.get("scrapeLimit") is not None else 3,
+            "groundedAnswer": obj.get("groundedAnswer") if obj.get("groundedAnswer") is not None else False
         })
         return _obj
 

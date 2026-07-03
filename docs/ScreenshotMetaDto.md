@@ -25,6 +25,9 @@ Name | Type | Description | Notes
 **quality** | **float** | Image quality (JPEG/WEBP) | [optional] 
 **scale_factor** | **float** | Device scale factor | [optional] 
 **capture_beyond_viewport** | **bool** | Capture beyond viewport | [optional] 
+**selector** | **str** | CSS selector that was targeted, if provided | [optional] 
+**fallback_to_full_page** | **bool** | Whether fallback to full-page was enabled | [optional] 
+**inline** | **bool** | Whether inline base64 output was requested | [optional] 
 **test** | [**TestMetaDto**](TestMetaDto.md) | Test details | 
 
 ## Example

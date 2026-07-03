@@ -48,8 +48,11 @@ class ScreenshotMetaDto(BaseModel):
     quality: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Image quality (JPEG/WEBP)", json_schema_extra={"examples": [90]})
     scale_factor: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Device scale factor", alias="scaleFactor", json_schema_extra={"examples": [1]})
     capture_beyond_viewport: Optional[StrictBool] = Field(default=None, description="Capture beyond viewport", alias="captureBeyondViewport", json_schema_extra={"examples": [True]})
+    selector: Optional[StrictStr] = Field(default=None, description="CSS selector that was targeted, if provided", json_schema_extra={"examples": [".hero-section"]})
+    fallback_to_full_page: Optional[StrictBool] = Field(default=None, description="Whether fallback to full-page was enabled", alias="fallbackToFullPage", json_schema_extra={"examples": [False]})
+    inline: Optional[StrictBool] = Field(default=None, description="Whether inline base64 output was requested", json_schema_extra={"examples": [False]})
     test: TestMetaDto = Field(description="Test details")
-    __properties: ClassVar[List[str]] = ["url", "type", "device", "fullPage", "blockAds", "hideCookie", "skipCaptcha", "addTimestamp", "proxyCountry", "pageHeight", "viewportWidth", "viewportHeight", "theme", "removeBackground", "highlightLinks", "delay", "disableAnimations", "quality", "scaleFactor", "captureBeyondViewport", "test"]
+    __properties: ClassVar[List[str]] = ["url", "type", "device", "fullPage", "blockAds", "hideCookie", "skipCaptcha", "addTimestamp", "proxyCountry", "pageHeight", "viewportWidth", "viewportHeight", "theme", "removeBackground", "highlightLinks", "delay", "disableAnimations", "quality", "scaleFactor", "captureBeyondViewport", "selector", "fallbackToFullPage", "inline", "test"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -125,6 +128,9 @@ class ScreenshotMetaDto(BaseModel):
             "quality": obj.get("quality"),
             "scaleFactor": obj.get("scaleFactor"),
             "captureBeyondViewport": obj.get("captureBeyondViewport"),
+            "selector": obj.get("selector"),
+            "fallbackToFullPage": obj.get("fallbackToFullPage"),
+            "inline": obj.get("inline"),
             "test": TestMetaDto.from_dict(obj["test"]) if obj.get("test") is not None else None
         })
         return _obj

@@ -17,30 +17,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Union
-from geekflare_api.models.dns_meta_dto import DnsMetaDto
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List
+from geekflare_api.models.grounded_source_dto import GroundedSourceDto
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class DnsRecordResponseDto(BaseModel):
+class GroundedAnswerDataDto(BaseModel):
     """
-    DnsRecordResponseDto
+    GroundedAnswerDataDto
     """ # noqa: E501
-    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1783063255117]})
-    api_status: StrictStr = Field(description="API status message", alias="apiStatus", json_schema_extra={"examples": ["success"]})
-    api_code: Union[StrictFloat, StrictInt] = Field(description="API status code", alias="apiCode", json_schema_extra={"examples": [200]})
-    meta: DnsMetaDto = Field(description="Metadata about the request.")
-    data: Dict[str, Any] = Field(description="DNS records grouped by type.", json_schema_extra={"examples": [{"A": ["172.67.70.213", "104.26.11.88", "104.26.10.88"], "MX": [{"exchange": "alt3.aspmx.l.google.com", "priority": 10}, {"exchange": "aspmx.l.google.com", "priority": 1}]}]})
-    __properties: ClassVar[List[str]] = ["timestamp", "apiStatus", "apiCode", "meta", "data"]
-
-    @field_validator('api_status')
-    def api_status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['success', 'failure']):
-            raise ValueError("must be one of enum values ('success', 'failure')")
-        return value
+    answer: StrictStr = Field(description="AI-synthesized answer with inline citations")
+    sources: List[GroundedSourceDto] = Field(description="Sources cited in the answer")
+    __properties: ClassVar[List[str]] = ["answer", "sources"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -60,7 +50,7 @@ class DnsRecordResponseDto(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of DnsRecordResponseDto from a JSON string"""
+        """Create an instance of GroundedAnswerDataDto from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -81,14 +71,18 @@ class DnsRecordResponseDto(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of meta
-        if self.meta:
-            _dict['meta'] = self.meta.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in sources (list)
+        _items = []
+        if self.sources:
+            for _item_sources in self.sources:
+                if _item_sources:
+                    _items.append(_item_sources.to_dict())
+            _dict['sources'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of DnsRecordResponseDto from a dict"""
+        """Create an instance of GroundedAnswerDataDto from a dict"""
         if obj is None:
             return None
 
@@ -96,11 +90,8 @@ class DnsRecordResponseDto(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "timestamp": obj.get("timestamp"),
-            "apiStatus": obj.get("apiStatus"),
-            "apiCode": obj.get("apiCode"),
-            "meta": DnsMetaDto.from_dict(obj["meta"]) if obj.get("meta") is not None else None,
-            "data": obj.get("data")
+            "answer": obj.get("answer"),
+            "sources": [GroundedSourceDto.from_dict(_item) for _item in obj["sources"]] if obj.get("sources") is not None else None
         })
         return _obj
 
