@@ -112,6 +112,9 @@ AuthSettings = TypedDict(
     "AuthSettings",
     {
         "x-api-key": APIKeyAuthSetting,
+        "bearer-token": BearerFormatAuthSetting,
+        "gf_auth_session": APIKeyAuthSetting,
+        "x-internal-key": APIKeyAuthSetting,
     },
     total=False,
 )
@@ -543,6 +546,32 @@ conf = geekflare_api.Configuration(
                     'x-api-key',
                 ),
             }
+        if self.access_token is not None:
+            auth['bearer-token'] = {
+                'type': 'bearer',
+                'in': 'header',
+                'format': 'JWT',
+                'key': 'Authorization',
+                'value': 'Bearer ' + self.access_token
+            }
+        if 'gf_auth_session' in self.api_key:
+            auth['gf_auth_session'] = {
+                'type': 'api_key',
+                'in': 'cookie',
+                'key': 'gf_auth_session',
+                'value': self.get_api_key_with_prefix(
+                    'gf_auth_session',
+                ),
+            }
+        if 'x-internal-key' in self.api_key:
+            auth['x-internal-key'] = {
+                'type': 'api_key',
+                'in': 'header',
+                'key': 'x-internal-key',
+                'value': self.get_api_key_with_prefix(
+                    'x-internal-key',
+                ),
+            }
         return auth
 
     def to_debug_report(self) -> str:
@@ -554,7 +583,7 @@ conf = geekflare_api.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 0.1.0".\
+               "SDK Package Version: 0.1.2".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

@@ -9,7 +9,8 @@ Name | Type | Description | Notes
 **api_status** | **str** | API status message | 
 **api_code** | **float** | API status code | 
 **meta** | [**ScreenshotMetaDto**](ScreenshotMetaDto.md) | Metadata about the request | 
-**data** | **str** | Screenshot URL or base64 string | 
+**data** | **str** | URL of the captured screenshot | 
+**inline** | [**ScreenshotInlineDto**](ScreenshotInlineDto.md) | Inline Base64 image data. Present only when the request included &#x60;inline: true&#x60;. | [optional] 
 
 ## Example
 

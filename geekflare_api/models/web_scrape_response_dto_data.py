@@ -16,24 +16,23 @@ from __future__ import annotations
 import json
 import pprint
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, ValidationError, field_validator
-from typing import Any, List, Optional
-from geekflare_api.models.mixed_content_data_dto import MixedContentDataDto
+from typing import Any, Dict, List, Optional
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-MIXEDCONTENTRESPONSEDTODATA_ONE_OF_SCHEMAS = ["List[str]", "MixedContentDataDto"]
+WEBSCRAPERESPONSEDTODATA_ONE_OF_SCHEMAS = ["object", "str"]
 
-class MixedContentResponseDtoData(BaseModel):
+class WebScrapeResponseDtoData(BaseModel):
     """
-    Contains either an array of all resources (when no mixed content) or an object with insecure/secure arrays (when mixed content found)
+    Scraped data (URL or inline content depending on output)
     """
-    # data type: List[str]
-    oneof_schema_1_validator: Optional[List[StrictStr]] = Field(default=None, description="Simple array of all resources when no mixed content found", json_schema_extra={"examples": [["https://example.com/", "https://example.com/style.css", "https://example.com/script.js"]]})
-    # data type: MixedContentDataDto
-    oneof_schema_2_validator: Optional[MixedContentDataDto] = None
-    actual_instance: Optional[Union[List[str], MixedContentDataDto]] = None
-    one_of_schemas: Set[str] = { "List[str]", "MixedContentDataDto" }
+    # data type: str
+    oneof_schema_1_validator: Optional[StrictStr] = None
+    # data type: object
+    oneof_schema_2_validator: Optional[Dict[str, Any]] = None
+    actual_instance: Optional[Union[object, str]] = None
+    one_of_schemas: Set[str] = { "object", "str" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -53,26 +52,27 @@ class MixedContentResponseDtoData(BaseModel):
 
     @field_validator('actual_instance')
     def actual_instance_must_validate_oneof(cls, v):
-        instance = MixedContentResponseDtoData.model_construct()
+        instance = WebScrapeResponseDtoData.model_construct()
         error_messages = []
         match = 0
-        # validate data type: List[str]
+        # validate data type: str
         try:
             instance.oneof_schema_1_validator = v
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        # validate data type: MixedContentDataDto
-        if not isinstance(v, MixedContentDataDto):
-            error_messages.append(f"Error! Input type `{type(v)}` is not `MixedContentDataDto`")
-        else:
+        # validate data type: object
+        try:
+            instance.oneof_schema_2_validator = v
             match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in MixedContentResponseDtoData with oneOf schemas: List[str], MixedContentDataDto. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in WebScrapeResponseDtoData with oneOf schemas: object, str. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in MixedContentResponseDtoData with oneOf schemas: List[str], MixedContentDataDto. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in WebScrapeResponseDtoData with oneOf schemas: object, str. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -87,7 +87,7 @@ class MixedContentResponseDtoData(BaseModel):
         error_messages = []
         match = 0
 
-        # deserialize data into List[str]
+        # deserialize data into str
         try:
             # validation
             instance.oneof_schema_1_validator = json.loads(json_str)
@@ -96,19 +96,22 @@ class MixedContentResponseDtoData(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
-        # deserialize data into MixedContentDataDto
+        # deserialize data into object
         try:
-            instance.actual_instance = MixedContentDataDto.from_json(json_str)
+            # validation
+            instance.oneof_schema_2_validator = json.loads(json_str)
+            # assign value to actual_instance
+            instance.actual_instance = instance.oneof_schema_2_validator
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into MixedContentResponseDtoData with oneOf schemas: List[str], MixedContentDataDto. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into WebScrapeResponseDtoData with oneOf schemas: object, str. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into MixedContentResponseDtoData with oneOf schemas: List[str], MixedContentDataDto. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into WebScrapeResponseDtoData with oneOf schemas: object, str. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -122,7 +125,7 @@ class MixedContentResponseDtoData(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], List[str], MixedContentDataDto]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], object, str]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

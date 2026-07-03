@@ -19,20 +19,21 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Union
-from geekflare_api.models.dns_meta_dto import DnsMetaDto
+from geekflare_api.models.grounded_answer_data_dto import GroundedAnswerDataDto
+from geekflare_api.models.search_meta_dto import SearchMetaDto
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
 
-class DnsRecordResponseDto(BaseModel):
+class GroundedAnswerResponseDto(BaseModel):
     """
-    DnsRecordResponseDto
+    GroundedAnswerResponseDto
     """ # noqa: E501
     timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1783063255117]})
     api_status: StrictStr = Field(description="API status message", alias="apiStatus", json_schema_extra={"examples": ["success"]})
     api_code: Union[StrictFloat, StrictInt] = Field(description="API status code", alias="apiCode", json_schema_extra={"examples": [200]})
-    meta: DnsMetaDto = Field(description="Metadata about the request.")
-    data: Dict[str, Any] = Field(description="DNS records grouped by type.", json_schema_extra={"examples": [{"A": ["172.67.70.213", "104.26.11.88", "104.26.10.88"], "MX": [{"exchange": "alt3.aspmx.l.google.com", "priority": 10}, {"exchange": "aspmx.l.google.com", "priority": 1}]}]})
+    meta: SearchMetaDto
+    data: GroundedAnswerDataDto
     __properties: ClassVar[List[str]] = ["timestamp", "apiStatus", "apiCode", "meta", "data"]
 
     @field_validator('api_status')
@@ -60,7 +61,7 @@ class DnsRecordResponseDto(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of DnsRecordResponseDto from a JSON string"""
+        """Create an instance of GroundedAnswerResponseDto from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -84,11 +85,14 @@ class DnsRecordResponseDto(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of meta
         if self.meta:
             _dict['meta'] = self.meta.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of data
+        if self.data:
+            _dict['data'] = self.data.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of DnsRecordResponseDto from a dict"""
+        """Create an instance of GroundedAnswerResponseDto from a dict"""
         if obj is None:
             return None
 
@@ -99,8 +103,8 @@ class DnsRecordResponseDto(BaseModel):
             "timestamp": obj.get("timestamp"),
             "apiStatus": obj.get("apiStatus"),
             "apiCode": obj.get("apiCode"),
-            "meta": DnsMetaDto.from_dict(obj["meta"]) if obj.get("meta") is not None else None,
-            "data": obj.get("data")
+            "meta": SearchMetaDto.from_dict(obj["meta"]) if obj.get("meta") is not None else None,
+            "data": GroundedAnswerDataDto.from_dict(obj["data"]) if obj.get("data") is not None else None
         })
         return _obj
 

@@ -123,7 +123,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "BrokenLinkResponseDto",
             '400': "BaseErrorResponseDto",
-            '500': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -191,7 +191,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "BrokenLinkResponseDto",
             '400': "BaseErrorResponseDto",
-            '500': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -259,7 +259,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "BrokenLinkResponseDto",
             '400': "BaseErrorResponseDto",
-            '500': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -678,6 +678,8 @@ class ApiToolApi:
             '200': "DnsSecResponseDto",
             '400': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
+            '502': "BaseErrorResponseDto",
+            '504': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -746,6 +748,8 @@ class ApiToolApi:
             '200': "DnsSecResponseDto",
             '400': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
+            '502': "BaseErrorResponseDto",
+            '504': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -814,6 +818,8 @@ class ApiToolApi:
             '200': "DnsSecResponseDto",
             '400': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
+            '502': "BaseErrorResponseDto",
+            '504': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -954,6 +960,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LighthouseResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1022,6 +1029,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LighthouseResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1090,6 +1098,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LighthouseResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1231,6 +1240,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LoadTimeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1299,6 +1309,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LoadTimeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1367,6 +1378,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "LoadTimeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1508,6 +1520,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetaScrapeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1576,6 +1589,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetaScrapeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1644,6 +1658,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MetaScrapeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1785,6 +1800,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MixedContentResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1853,6 +1869,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MixedContentResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -1921,6 +1938,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "MixedContentResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -2339,6 +2357,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "OpenPortResponseDto",
             '400': "BaseErrorResponseDto",
+            '408': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -2407,6 +2426,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "OpenPortResponseDto",
             '400': "BaseErrorResponseDto",
+            '408': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -2475,6 +2495,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "OpenPortResponseDto",
             '400': "BaseErrorResponseDto",
+            '408': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -2616,7 +2637,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PingResponseDto",
             '400': "BaseErrorResponseDto",
-            '500': "BaseErrorResponseDto",
+            '504': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2684,7 +2705,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PingResponseDto",
             '400': "BaseErrorResponseDto",
-            '500': "BaseErrorResponseDto",
+            '504': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2752,7 +2773,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "PingResponseDto",
             '400': "BaseErrorResponseDto",
-            '500': "BaseErrorResponseDto",
+            '504': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2893,6 +2914,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RedirectCheckResponseDto",
             '400': "BaseErrorResponseDto",
+            '429': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -2961,6 +2983,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RedirectCheckResponseDto",
             '400': "BaseErrorResponseDto",
+            '429': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3029,6 +3052,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "RedirectCheckResponseDto",
             '400': "BaseErrorResponseDto",
+            '429': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3170,6 +3194,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ScreenshotResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3238,6 +3263,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ScreenshotResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3306,6 +3332,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "ScreenshotResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3411,7 +3438,7 @@ class ApiToolApi:
     ) -> Search200Response:
         """Search API for AI Agents & LLMs
 
-        Search the web for AI, remove noise like ads and unnecessary HTML, and return clean data in JSON, Markdown, or HTML formats, with support for image search and news.
+        Structured search results from the web or news. Strips out ads and HTML noise to provide pure data in JSON, Markdown, or HTML. Fully supports AI-grounded answers, search-with-scrape, image search, and targeted Web or News sourcing.
 
         :param search_request_dto: (required)
         :type search_request_dto: SearchRequestDto
@@ -3448,6 +3475,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Search200Response",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3480,7 +3508,7 @@ class ApiToolApi:
     ) -> ApiResponse[Search200Response]:
         """Search API for AI Agents & LLMs
 
-        Search the web for AI, remove noise like ads and unnecessary HTML, and return clean data in JSON, Markdown, or HTML formats, with support for image search and news.
+        Structured search results from the web or news. Strips out ads and HTML noise to provide pure data in JSON, Markdown, or HTML. Fully supports AI-grounded answers, search-with-scrape, image search, and targeted Web or News sourcing.
 
         :param search_request_dto: (required)
         :type search_request_dto: SearchRequestDto
@@ -3517,6 +3545,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Search200Response",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3549,7 +3578,7 @@ class ApiToolApi:
     ) -> RESTResponseType:
         """Search API for AI Agents & LLMs
 
-        Search the web for AI, remove noise like ads and unnecessary HTML, and return clean data in JSON, Markdown, or HTML formats, with support for image search and news.
+        Structured search results from the web or news. Strips out ads and HTML noise to provide pure data in JSON, Markdown, or HTML. Fully supports AI-grounded answers, search-with-scrape, image search, and targeted Web or News sourcing.
 
         :param search_request_dto: (required)
         :type search_request_dto: SearchRequestDto
@@ -3586,6 +3615,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Search200Response",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3727,6 +3757,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SiteStatusResponseDto",
             '400': "BaseErrorResponseDto",
+            '429': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3795,6 +3826,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SiteStatusResponseDto",
             '400': "BaseErrorResponseDto",
+            '429': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -3863,6 +3895,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "SiteStatusResponseDto",
             '400': "BaseErrorResponseDto",
+            '429': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4004,6 +4037,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TlsScanResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4072,6 +4106,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TlsScanResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4140,6 +4175,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "TlsScanResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4281,6 +4317,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Url2PdfResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4349,6 +4386,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Url2PdfResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4417,6 +4455,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "Url2PdfResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4558,6 +4597,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebScrapeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4626,6 +4666,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebScrapeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(
@@ -4694,6 +4735,7 @@ class ApiToolApi:
         _response_types_map: Dict[str, Optional[str]] = {
             '200': "WebScrapeResponseDto",
             '400': "BaseErrorResponseDto",
+            '422': "BaseErrorResponseDto",
             '500': "BaseErrorResponseDto",
         }
         response_data = self.api_client.call_api(

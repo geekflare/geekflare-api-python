@@ -33,7 +33,8 @@ class SearchResultItemDto(BaseModel):
     var_date: Optional[StrictStr] = Field(default=None, description="Published date (if available)", alias="date", json_schema_extra={"examples": ["Dec 18, 2025"]})
     position: Union[StrictFloat, StrictInt] = Field(description="Rank position", json_schema_extra={"examples": [1]})
     content: Optional[Dict[str, Any]] = Field(default=None, description="Scraped cleaned HTML content from the result URL", json_schema_extra={"examples": ["Full article cleaned for LLM consumption..."]})
-    __properties: ClassVar[List[str]] = ["title", "url", "snippet", "date", "position", "content"]
+    thumbnail: Optional[Dict[str, Any]] = Field(default=None, description="Thumbnail image URL (if available)", json_schema_extra={"examples": ["https://example.com/thumb.jpg"]})
+    __properties: ClassVar[List[str]] = ["title", "url", "snippet", "date", "position", "content", "thumbnail"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -91,7 +92,8 @@ class SearchResultItemDto(BaseModel):
             "snippet": obj.get("snippet"),
             "date": obj.get("date"),
             "position": obj.get("position"),
-            "content": obj.get("content")
+            "content": obj.get("content"),
+            "thumbnail": obj.get("thumbnail")
         })
         return _obj
 

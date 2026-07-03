@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **redirects** | **float** | Number of redirect links (3xx status codes) | 
 **broken** | **float** | Number of broken links (4xx status codes and DNS/network failures) | 
 **server_error** | **float** | Number of server errors (5xx status codes) | 
+**forbidden** | **float** | Number of forbidden links (403 status codes) | 
+**timed_out** | **float** | Number of timed-out links | 
 
 ## Example
 

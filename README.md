@@ -61,3 +61,5 @@ except ApiException as e:
 ## License
 
 MIT
+
+mcp-name: com.geekflare/mcp
