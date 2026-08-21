@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**url** | **str** | The URL to be checked | 
+**url** | **str** | The URL, hostname, IPv4, or IPv6 address to be checked | 
 **top_ports** | **float** | Scan only the top N ports (optional) | [optional] 
 **port_ranges** | **str** | Custom port ranges to scan, e.g., \&quot;80,443,1000-1010\&quot; | [optional] 
 

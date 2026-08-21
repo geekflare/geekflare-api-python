@@ -28,6 +28,8 @@ Method | HTTP request | Description
 
 Check if a webpage contains broken links
 
+Scan a webpage for broken links and report which URLs return errors, so you can fix dead links before they hurt SEO or user experience.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -108,6 +110,8 @@ Name | Type | Description  | Notes
 
 Retrieve DNS records for a given domain
 
+Look up A, AAAA, CNAME, MX, CAA, NS, SOA, SRV, and TXT records for any domain. Query every supported type in one call, or pass `types` to fetch only the ones you need.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -187,6 +191,8 @@ Name | Type | Description  | Notes
 > DnsSecResponseDto dns_sec(dns_sec_dto)
 
 Check if DNSSEC is enabled for a domain
+
+Check whether DNSSEC is properly configured and validating for a domain, helping you confirm protection against DNS spoofing and cache poisoning attacks.
 
 ### Example
 
@@ -270,6 +276,8 @@ Name | Type | Description  | Notes
 
 Run Lighthouse audit on a website
 
+Run a Google Lighthouse audit for performance, SEO, accessibility, and best practices, with support for advanced flags via the `parameters` array.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -347,9 +355,11 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **load_time**
-> LoadTimeResponseDto load_time(load_time_dto)
+> LoadTime200Response load_time(load_time_dto)
 
 Measure the page load time for a given URL
+
+Measure how long a webpage takes to fully load from a real browser. Pass `targetCountries` (up to 3 ISO country codes) to also test reachability from those locations via proxy alongside the default US server test, and compare results side by side.
 
 ### Example
 
@@ -357,8 +367,8 @@ Measure the page load time for a given URL
 
 ```python
 import geekflare_api
+from geekflare_api.models.load_time200_response import LoadTime200Response
 from geekflare_api.models.load_time_dto import LoadTimeDto
-from geekflare_api.models.load_time_response_dto import LoadTimeResponseDto
 from geekflare_api.rest import ApiException
 from pprint import pprint
 
@@ -405,7 +415,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**LoadTimeResponseDto**](LoadTimeResponseDto.md)
+[**LoadTime200Response**](LoadTime200Response.md)
 
 ### Authorization
 
@@ -420,7 +430,7 @@ Name | Type | Description  | Notes
 
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Load time retrieved successfully |  -  |
+**200** | Load time retrieved successfully. Returns a single-location result by default, or a per-location breakdown when &#x60;targetCountries&#x60; is set. |  -  |
 **400** | Invalid URL. |  -  |
 **422** | Unable to connect to the target website. |  -  |
 **500** | Failed to measure page load time. |  -  |
@@ -431,6 +441,8 @@ Name | Type | Description  | Notes
 > MetaScrapeResponseDto meta_scrape(meta_scrape_dto)
 
 Scrape a webpage meta with custom options
+
+Extract a page's meta tags, Open Graph, and Twitter Card data like title, description, canonical URL, images, and more without scraping the full page body.
 
 ### Example
 
@@ -513,6 +525,8 @@ Name | Type | Description  | Notes
 
 Check for mixed content on a site
 
+Scan an HTTPS page for insecure HTTP resources like images, scripts, or stylesheets that trigger browser security warnings and break the padlock icon.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -594,6 +608,8 @@ Name | Type | Description  | Notes
 
 Perform MTR (My Traceroute) network diagnostic test
 
+Run a My Traceroute (MTR) diagnostic between Geekflare and a target host, combining traceroute and ping to show packet loss and latency at each network hop.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -673,6 +689,8 @@ Name | Type | Description  | Notes
 > OpenPortResponseDto open_ports(open_port_dto)
 
 Scan a website for open ports
+
+Scan a domain or IP for open TCP ports, either across the top N most common ports or a custom range you specify. Useful for surface-level network security audits and exposure checks.
 
 ### Example
 
@@ -755,6 +773,8 @@ Name | Type | Description  | Notes
 
 Perform ICMP Ping test on a given URL or IP
 
+Send ICMP ping requests to a URL or IP and return latency, packet loss, and round-trip time statistics — useful for quick reachability and network health checks.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -834,6 +854,8 @@ Name | Type | Description  | Notes
 > RedirectCheckResponseDto redirect_check(redirect_check_dto)
 
 Check the redirection chain of a given URL
+
+Trace the full redirect chain of a URL, including every intermediate hop, status code, and the final destination. Useful for auditing SEO redirects and link rot.
 
 ### Example
 
@@ -915,6 +937,8 @@ Name | Type | Description  | Notes
 > ScreenshotResponseDto screenshot(screenshot_dto)
 
 Capture a full-page screenshot of a website
+
+Capture a pixel-perfect screenshot of any URL as PNG, JPEG, or WebP. Supports full-page capture, device emulation, custom viewports, and CAPTCHA/cookie-banner bypass.
 
 ### Example
 
@@ -1080,6 +1104,8 @@ Name | Type | Description  | Notes
 
 Check if a site is up or down
 
+Check whether a website is reachable and returns a successful HTTP response. Ideal for uptime monitoring and pre-flight checks before running other tests.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -1160,6 +1186,8 @@ Name | Type | Description  | Notes
 > TlsScanResponseDto tls_scan(tls_scan_dto)
 
 Perform TLS scan for a given domain
+
+Inspect a domain's TLS/SSL configuration, including which protocol versions are supported (from the deprecated and insecure SSLv2/SSLv3 through TLS 1.3) and certificate details, to catch expiring certificates and outdated, insecure configurations.
 
 ### Example
 
@@ -1242,6 +1270,8 @@ Name | Type | Description  | Notes
 
 Capture a full-page Url2Pdf of a website
 
+Convert any URL into a downloadable PDF document, with control over page orientation, margins, and scale. Useful for archiving pages or generating reports.
+
 ### Example
 
 * Api Key Authentication (x-api-key):
@@ -1322,6 +1352,8 @@ Name | Type | Description  | Notes
 > WebScrapeResponseDto web_scrape(web_scrape_dto)
 
 Scrape a webpage with custom options
+
+Fetch a page and return content as Markdown, HTML, JSON, or plain text. Automatically detects whether JavaScript rendering is needed, with optional stealth mode, `proxyMode`-controlled proxy routing, CSS/XPath field extraction, and ready-made `product`/`contact` extraction templates.
 
 ### Example
 

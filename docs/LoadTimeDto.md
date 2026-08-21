@@ -6,8 +6,9 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **url** | **str** | Target URL | 
-**proxy_country** | **str** | Proxy country code to route the request | [optional] 
 **follow_redirect** | **bool** | Whether to follow redirects when checking site status | [optional] [default to False]
+**proxy_country** | **str** | Proxy country code to route the request | [optional] 
+**target_countries** | **List[str]** | Test the URL from up to 3 additional locations via proxy, alongside the default US server test. Each entry is an ISO alpha-2 country code. When set, the response includes a per-location reachability breakdown instead of a single result. | [optional] 
 
 ## Example
 

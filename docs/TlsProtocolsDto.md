@@ -5,6 +5,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**ssl2** | **bool** | Whether the deprecated and insecure SSL 2.0 is supported | 
+**ssl3** | **bool** | Whether the deprecated and insecure SSL 3.0 is supported | 
 **tls10** | **bool** | Whether TLS 1.0 is supported | 
 **tls11** | **bool** | Whether TLS 1.1 is supported | 
 **tls12** | **bool** | Whether TLS 1.2 is supported | 

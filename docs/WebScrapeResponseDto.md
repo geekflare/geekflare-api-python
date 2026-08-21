@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **api_code** | **float** | API status code | 
 **meta** | [**WebScrapeMetaDto**](WebScrapeMetaDto.md) | Metadata about the request | 
 **data** | [**WebScrapeResponseDtoData**](WebScrapeResponseDtoData.md) |  | 
+**ai_result** | **object** | AI extraction/analysis result. Shape depends on aiPrompt.type. Omitted when aiPrompt was not provided. | [optional] 
 
 ## Example
 

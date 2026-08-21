@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**url** | **str** | Target URL | 
+**url** | **str** | Target URL, hostname, IPv4, or IPv6 address | 
 
 ## Example
 

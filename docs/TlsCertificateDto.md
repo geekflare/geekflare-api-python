@@ -9,6 +9,18 @@ Name | Type | Description | Notes
 **subject_alt_name** | **str** | Subject Alternative Names (SAN) | 
 **issuer** | [**TlsCertificateIssuerDto**](TlsCertificateIssuerDto.md) | Issuer details | 
 **expiry** | **str** | Certificate expiry date | 
+**valid_from** | **str** | Certificate valid-from date | 
+**is_expired** | **bool** | Whether the certificate has expired | 
+**is_not_yet_valid** | **bool** | Whether the certificate is not yet valid | 
+**hostname_matches** | **bool** | Whether the requested hostname matches the certificate (CN/SAN) | 
+**self_signed** | **bool** | Whether the leaf certificate is self-signed | 
+**key_bits** | **object** | Public key size in bits, null if not an RSA key | 
+**weak_key** | **object** | Whether the key size is considered weak (RSA &lt; 2048 bits), null if not applicable | 
+**weak_signature_algorithm** | **object** | Whether the certificate uses a weak signature algorithm (SHA-1/MD5); heuristic OID scan, null if undeterminable | 
+**chain** | [**TlsCertificateChainDto**](TlsCertificateChainDto.md) | Certificate chain analysis | 
+**forward_secrecy** | [**TlsForwardSecrecyDto**](TlsForwardSecrecyDto.md) | Forward secrecy signal from the negotiated handshake | 
+**trusted** | **bool** | Whether the chain validates against Node/OpenSSL&#39;s built-in trust store | 
+**authorization_error** | **object** | Node TLS authorization error code/message if not trusted, null otherwise | 
 
 ## Example
 
