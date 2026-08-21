@@ -7,6 +7,8 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **protocols** | [**TlsProtocolsDto**](TlsProtocolsDto.md) | Protocols supported | 
 **certificate** | [**TlsCertificateDto**](TlsCertificateDto.md) | Certificate details | 
+**vulnerabilities** | [**TlsVulnerabilitiesDto**](TlsVulnerabilitiesDto.md) | Category A vulnerability findings (definitive pass/fail) | 
+**advisory** | [**TlsAdvisoryDto**](TlsAdvisoryDto.md) | Category B advisory signals (informational, not a verdict) | 
 
 ## Example
 
