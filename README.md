@@ -1,6 +1,6 @@
 # geekflare-api
 
-Official Python SDK for all [Geekflare](https://geekflare.com/api/).
+Official Python SDK for the [Geekflare](https://geekflare.com/api/).
 
 - API version: 1.0.0
 - Package version: 0.2.0
