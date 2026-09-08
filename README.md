@@ -3,7 +3,7 @@
 Official Python SDK for the [Geekflare](https://geekflare.com/api/).
 
 - API version: 1.0.0
-- Package version: 0.2.0
+- Package version: 0.3.1
 
 ## Requirements.
 
@@ -30,25 +30,26 @@ with GeekflareClient(api_key="your-api-key") as client:
 
 ## Available Methods
 
-| Method                        | Description                    |
-| ----------------------------- | ------------------------------ |
-| `client.meta_scrape(body)`    | Scrape meta tags from a URL    |
-| `client.web_scrape(body)`     | Scrape web page content        |
-| `client.dns_record(body)`     | Look up DNS records            |
-| `client.screenshot(body)`     | Take a screenshot of a URL     |
-| `client.site_status(body)`    | Check if a site is up or down  |
-| `client.redirect_check(body)` | Check redirect chain of a URL  |
-| `client.broken_link(body)`    | Find broken links on a page    |
-| `client.url2_pdf(body)`       | Convert a URL to PDF           |
-| `client.open_ports(body)`     | Scan open ports on a host      |
-| `client.tls_scan(body)`       | Scan TLS/SSL configuration     |
-| `client.load_time(body)`      | Test page load time            |
-| `client.mixed_content(body)`  | Check for mixed content issues |
-| `client.dns_sec(body)`        | Check DNSSEC configuration     |
-| `client.mtr(body)`            | Perform MTR network test       |
-| `client.ping(body)`           | Ping a host                    |
-| `client.lighthouse(body)`     | Run Lighthouse audit           |
-| `client.search(body)`         | Perform a web search           |
+| Method                        | Description                                               |
+| ----------------------------- | --------------------------------------------------------- |
+| `client.meta_scrape(body)`    | Scrape meta tags from a URL                               |
+| `client.web_scrape(body)`     | Scrape web page content                                   |
+| `client.brand(body)`          | Get structured brand and company information for a domain |
+| `client.dns_record(body)`     | Look up DNS records                                       |
+| `client.screenshot(body)`     | Take a screenshot of a URL                                |
+| `client.site_status(body)`    | Check if a site is up or down                             |
+| `client.redirect_check(body)` | Check redirect chain of a URL                             |
+| `client.broken_link(body)`    | Find broken links on a page                               |
+| `client.url2_pdf(body)`       | Convert a URL to PDF                                      |
+| `client.open_ports(body)`     | Scan open ports on a host                                 |
+| `client.tls_scan(body)`       | Scan TLS/SSL configuration                                |
+| `client.load_time(body)`      | Test page load time                                       |
+| `client.mixed_content(body)`  | Check for mixed content issues                            |
+| `client.dns_sec(body)`        | Check DNSSEC configuration                                |
+| `client.mtr(body)`            | Perform MTR network test                                  |
+| `client.ping(body)`           | Ping a host                                               |
+| `client.lighthouse(body)`     | Run Lighthouse audit                                      |
+| `client.search(body)`         | Perform a web search                                      |
 
 ## Error Handling
 
@@ -98,6 +99,7 @@ All URIs are relative to *https://api.geekflare.com*
 
 | Class        | Method                                                  | HTTP request            | Description                                         |
 | ------------ | ------------------------------------------------------- | ----------------------- | --------------------------------------------------- |
+| _ApiToolApi_ | [**brand**](docs/ApiToolApi.md#brand)                   | **POST** /brand         | Get brand data for a domain                         |
 | _ApiToolApi_ | [**broken_link**](docs/ApiToolApi.md#broken_link)       | **POST** /brokenlink    | Check if a webpage contains broken links            |
 | _ApiToolApi_ | [**dns_record**](docs/ApiToolApi.md#dns_record)         | **POST** /dnsrecord     | Retrieve DNS records for a given domain             |
 | _ApiToolApi_ | [**dns_sec**](docs/ApiToolApi.md#dns_sec)               | **POST** /dnssec        | Check if DNSSEC is enabled for a domain             |
@@ -119,11 +121,29 @@ All URIs are relative to *https://api.geekflare.com*
 ## Documentation For Models
 
 - [BaseErrorResponseDto](docs/BaseErrorResponseDto.md)
+- [BrandButtonStyleDto](docs/BrandButtonStyleDto.md)
+- [BrandColorEntryDto](docs/BrandColorEntryDto.md)
+- [BrandColorsDto](docs/BrandColorsDto.md)
+- [BrandCompanyDto](docs/BrandCompanyDto.md)
+- [BrandComponentsDto](docs/BrandComponentsDto.md)
+- [BrandDataDto](docs/BrandDataDto.md)
+- [BrandDto](docs/BrandDto.md)
+- [BrandFontDto](docs/BrandFontDto.md)
+- [BrandLinksDto](docs/BrandLinksDto.md)
+- [BrandLocationDto](docs/BrandLocationDto.md)
+- [BrandLogoDto](docs/BrandLogoDto.md)
+- [BrandMetaDto](docs/BrandMetaDto.md)
+- [BrandPageMetaDto](docs/BrandPageMetaDto.md)
+- [BrandResponseDto](docs/BrandResponseDto.md)
+- [BrandSocialProfileDto](docs/BrandSocialProfileDto.md)
+- [BrandSpacingDto](docs/BrandSpacingDto.md)
+- [BrandTypographyDto](docs/BrandTypographyDto.md)
 - [BrokenLinkDto](docs/BrokenLinkDto.md)
 - [BrokenLinkMetaDto](docs/BrokenLinkMetaDto.md)
 - [BrokenLinkResponseDto](docs/BrokenLinkResponseDto.md)
 - [BrokenLinkSummaryDto](docs/BrokenLinkSummaryDto.md)
 - [DefaultExtractionFieldDto](docs/DefaultExtractionFieldDto.md)
+- [DetectedServiceDto](docs/DetectedServiceDto.md)
 - [DnsMetaDto](docs/DnsMetaDto.md)
 - [DnsRecordDto](docs/DnsRecordDto.md)
 - [DnsRecordResponseDto](docs/DnsRecordResponseDto.md)
@@ -175,6 +195,7 @@ All URIs are relative to *https://api.geekflare.com*
 - [PingDto](docs/PingDto.md)
 - [PingMetaDto](docs/PingMetaDto.md)
 - [PingResponseDto](docs/PingResponseDto.md)
+- [PortServiceDetectionResultDto](docs/PortServiceDetectionResultDto.md)
 - [PromptAiPromptDto](docs/PromptAiPromptDto.md)
 - [ProtocolSupportDto](docs/ProtocolSupportDto.md)
 - [RedirectCheckDto](docs/RedirectCheckDto.md)
