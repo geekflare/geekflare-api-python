@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.2.0"
+__version__ = "0.3.1"
 
 # Define package exports
 __all__ = [
@@ -29,11 +29,29 @@ __all__ = [
     "ApiAttributeError",
     "ApiException",
     "BaseErrorResponseDto",
+    "BrandButtonStyleDto",
+    "BrandColorEntryDto",
+    "BrandColorsDto",
+    "BrandCompanyDto",
+    "BrandComponentsDto",
+    "BrandDataDto",
+    "BrandDto",
+    "BrandFontDto",
+    "BrandLinksDto",
+    "BrandLocationDto",
+    "BrandLogoDto",
+    "BrandMetaDto",
+    "BrandPageMetaDto",
+    "BrandResponseDto",
+    "BrandSocialProfileDto",
+    "BrandSpacingDto",
+    "BrandTypographyDto",
     "BrokenLinkDto",
     "BrokenLinkMetaDto",
     "BrokenLinkResponseDto",
     "BrokenLinkSummaryDto",
     "DefaultExtractionFieldDto",
+    "DetectedServiceDto",
     "DnsMetaDto",
     "DnsRecordDto",
     "DnsRecordResponseDto",
@@ -85,6 +103,7 @@ __all__ = [
     "PingDto",
     "PingMetaDto",
     "PingResponseDto",
+    "PortServiceDetectionResultDto",
     "PromptAiPromptDto",
     "ProtocolSupportDto",
     "RedirectCheckDto",
@@ -152,11 +171,29 @@ from geekflare_api.exceptions import ApiException as ApiException
 
 # import models into sdk package
 from geekflare_api.models.base_error_response_dto import BaseErrorResponseDto as BaseErrorResponseDto
+from geekflare_api.models.brand_button_style_dto import BrandButtonStyleDto as BrandButtonStyleDto
+from geekflare_api.models.brand_color_entry_dto import BrandColorEntryDto as BrandColorEntryDto
+from geekflare_api.models.brand_colors_dto import BrandColorsDto as BrandColorsDto
+from geekflare_api.models.brand_company_dto import BrandCompanyDto as BrandCompanyDto
+from geekflare_api.models.brand_components_dto import BrandComponentsDto as BrandComponentsDto
+from geekflare_api.models.brand_data_dto import BrandDataDto as BrandDataDto
+from geekflare_api.models.brand_dto import BrandDto as BrandDto
+from geekflare_api.models.brand_font_dto import BrandFontDto as BrandFontDto
+from geekflare_api.models.brand_links_dto import BrandLinksDto as BrandLinksDto
+from geekflare_api.models.brand_location_dto import BrandLocationDto as BrandLocationDto
+from geekflare_api.models.brand_logo_dto import BrandLogoDto as BrandLogoDto
+from geekflare_api.models.brand_meta_dto import BrandMetaDto as BrandMetaDto
+from geekflare_api.models.brand_page_meta_dto import BrandPageMetaDto as BrandPageMetaDto
+from geekflare_api.models.brand_response_dto import BrandResponseDto as BrandResponseDto
+from geekflare_api.models.brand_social_profile_dto import BrandSocialProfileDto as BrandSocialProfileDto
+from geekflare_api.models.brand_spacing_dto import BrandSpacingDto as BrandSpacingDto
+from geekflare_api.models.brand_typography_dto import BrandTypographyDto as BrandTypographyDto
 from geekflare_api.models.broken_link_dto import BrokenLinkDto as BrokenLinkDto
 from geekflare_api.models.broken_link_meta_dto import BrokenLinkMetaDto as BrokenLinkMetaDto
 from geekflare_api.models.broken_link_response_dto import BrokenLinkResponseDto as BrokenLinkResponseDto
 from geekflare_api.models.broken_link_summary_dto import BrokenLinkSummaryDto as BrokenLinkSummaryDto
 from geekflare_api.models.default_extraction_field_dto import DefaultExtractionFieldDto as DefaultExtractionFieldDto
+from geekflare_api.models.detected_service_dto import DetectedServiceDto as DetectedServiceDto
 from geekflare_api.models.dns_meta_dto import DnsMetaDto as DnsMetaDto
 from geekflare_api.models.dns_record_dto import DnsRecordDto as DnsRecordDto
 from geekflare_api.models.dns_record_response_dto import DnsRecordResponseDto as DnsRecordResponseDto
@@ -208,6 +245,7 @@ from geekflare_api.models.ping_data_dto import PingDataDto as PingDataDto
 from geekflare_api.models.ping_dto import PingDto as PingDto
 from geekflare_api.models.ping_meta_dto import PingMetaDto as PingMetaDto
 from geekflare_api.models.ping_response_dto import PingResponseDto as PingResponseDto
+from geekflare_api.models.port_service_detection_result_dto import PortServiceDetectionResultDto as PortServiceDetectionResultDto
 from geekflare_api.models.prompt_ai_prompt_dto import PromptAiPromptDto as PromptAiPromptDto
 from geekflare_api.models.protocol_support_dto import ProtocolSupportDto as ProtocolSupportDto
 from geekflare_api.models.redirect_check_dto import RedirectCheckDto as RedirectCheckDto

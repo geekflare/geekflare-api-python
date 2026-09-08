@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from geekflare_api.models.test_meta_dto import TestMetaDto
 from typing import Optional, Set
@@ -31,8 +31,9 @@ class OpenPortMetaDto(BaseModel):
     url: StrictStr = Field(description="The scanned URL", json_schema_extra={"examples": ["https://example.com"]})
     top_ports: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Top ports scanned (if any)", alias="topPorts", json_schema_extra={"examples": [100]})
     port_ranges: Optional[StrictStr] = Field(default=None, description="Custom port ranges scanned (if any)", alias="portRanges", json_schema_extra={"examples": ["80,443,1000-1010"]})
+    detect_services: Optional[StrictBool] = Field(default=None, description="Whether service/version detection was requested for this scan", alias="detectServices", json_schema_extra={"examples": [False]})
     test: TestMetaDto = Field(description="Test details object")
-    __properties: ClassVar[List[str]] = ["url", "topPorts", "portRanges", "test"]
+    __properties: ClassVar[List[str]] = ["url", "topPorts", "portRanges", "detectServices", "test"]
 
     @field_validator('top_ports')
     def top_ports_validate_enum(cls, value):
@@ -101,6 +102,7 @@ class OpenPortMetaDto(BaseModel):
             "url": obj.get("url"),
             "topPorts": obj.get("topPorts"),
             "portRanges": obj.get("portRanges"),
+            "detectServices": obj.get("detectServices"),
             "test": TestMetaDto.from_dict(obj["test"]) if obj.get("test") is not None else None
         })
         return _obj

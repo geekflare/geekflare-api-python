@@ -17,7 +17,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
@@ -30,7 +30,8 @@ class OpenPortDto(BaseModel):
     url: StrictStr = Field(description="The URL, hostname, IPv4, or IPv6 address to be checked", json_schema_extra={"examples": ["https://example.com"]})
     top_ports: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Scan only the top N ports (optional)", alias="topPorts", json_schema_extra={"examples": [100]})
     port_ranges: Optional[StrictStr] = Field(default=None, description="Custom port ranges to scan, e.g., \"80,443,1000-1010\"", alias="portRanges", json_schema_extra={"examples": ["80,443,1000-1010"]})
-    __properties: ClassVar[List[str]] = ["url", "topPorts", "portRanges"]
+    detect_services: Optional[StrictBool] = Field(default=False, description="When true, also runs service/version detection (nmap -sV) on the ports found open. Slower than the base scan since it probes each open port individually — best-effort: if it fails, the port list is still returned without service info.", alias="detectServices", json_schema_extra={"examples": [False]})
+    __properties: ClassVar[List[str]] = ["url", "topPorts", "portRanges", "detectServices"]
 
     @field_validator('top_ports')
     def top_ports_validate_enum(cls, value):
@@ -95,7 +96,8 @@ class OpenPortDto(BaseModel):
         _obj = cls.model_validate({
             "url": obj.get("url"),
             "topPorts": obj.get("topPorts"),
-            "portRanges": obj.get("portRanges")
+            "portRanges": obj.get("portRanges"),
+            "detectServices": obj.get("detectServices") if obj.get("detectServices") is not None else False
         })
         return _obj
 

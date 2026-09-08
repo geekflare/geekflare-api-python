@@ -36,12 +36,12 @@ class WebScrapeDto(BaseModel):
     render_js: Optional[StrictBool] = Field(default=None, description="Whether to render JavaScript. If omitted, rendering is automatic: the page is fetched without a browser first, and JavaScript is only rendered if the page needs it. Set explicitly to true or false to force rendering on or off.", alias="renderJS")
     proxy_mode: Optional[WebScrapeDtoProxyMode] = Field(default=None, alias="proxyMode")
     proxy_country: Optional[StrictStr] = Field(default=None, description="Proxy country code to route the request. Used when a proxy is active (proxyMode is auto or true).", alias="proxyCountry", json_schema_extra={"examples": ["us"]})
-    format: Optional[List[StrictStr]] = Field(default=None, description="Format(s) of the scraped result. Comma-separated or array. Defaults to html.", json_schema_extra={"examples": ["html,markdown"]})
+    format: Optional[List[StrictStr]] = Field(default=None, description="Format(s) of the scraped result. Comma-separated or array. Defaults to html-llm. markdown is recommended for most use cases.", json_schema_extra={"examples": ["markdown,json"]})
     file_output: Optional[StrictBool] = Field(default=False, description="Whether to get response in file format", alias="fileOutput", json_schema_extra={"examples": [False]})
     stealth: Optional[StrictBool] = Field(default=False, description="Enable stealth mode to bypass basic bot detection (removes webdriver signals, patches navigator properties)", json_schema_extra={"examples": [False]})
     wait_time: Optional[Union[StrictFloat, StrictInt]] = Field(default=0, description="Seconds to wait after page load before capturing content. Helps bypass lazy-loaded content and bot checks.", alias="waitTime", json_schema_extra={"examples": [2.5]})
     extraction_mode: Optional[StrictStr] = Field(default='default', description="Extraction mode (only used if format=json). Set to `template` to use a ready-made extraction template instead of a custom schema — see the `template` field.", alias="extractionMode", json_schema_extra={"examples": ["default"]})
-    template: Optional[StrictStr] = Field(default=None, description="Extraction template to use when extractionMode is `template`. `product` extracts product info (title, brand, pricing, availability, images, ratings). `contact` extracts contact info (company, locations, emails, phones, social profiles). Ignored for other extraction modes.", json_schema_extra={"examples": ["product"]})
+    template: Optional[StrictStr] = Field(default=None, description="Extraction template to use when extractionMode is `template` (ignored otherwise, and has no effect unless extractionMode is set to `template`). Accepts `product` (extracts product info: title, brand, pricing, availability, images, ratings) or `contact` (extracts contact info: company, locations, emails, phones, social profiles).")
     extraction_schema: Optional[ExtractionSchemaDto] = Field(default=None, description="Extraction schema (optional in default mode, required in css/xpath)", alias="extractionSchema")
     ai_prompt: Optional[WebScrapeDtoAiPrompt] = Field(default=None, alias="aiPrompt")
     __properties: ClassVar[List[str]] = ["url", "device", "blockAds", "renderJS", "proxyMode", "proxyCountry", "format", "fileOutput", "stealth", "waitTime", "extractionMode", "template", "extractionSchema", "aiPrompt"]
@@ -75,16 +75,6 @@ class WebScrapeDto(BaseModel):
 
         if value not in set(['default', 'cssSchema', 'xpathSchema', 'template']):
             raise ValueError("must be one of enum values ('default', 'cssSchema', 'xpathSchema', 'template')")
-        return value
-
-    @field_validator('template')
-    def template_validate_enum(cls, value):
-        """Validates the enum"""
-        if value is None:
-            return value
-
-        if value not in set(['product', 'contact']):
-            raise ValueError("must be one of enum values ('product', 'contact')")
         return value
 
     model_config = ConfigDict(

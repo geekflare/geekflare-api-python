@@ -18,8 +18,9 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from geekflare_api.models.open_port_meta_dto import OpenPortMetaDto
+from geekflare_api.models.port_service_detection_result_dto import PortServiceDetectionResultDto
 from typing import Optional, Set
 from typing_extensions import Self
 from pydantic_core import to_jsonable_python
@@ -28,12 +29,14 @@ class OpenPortResponseDto(BaseModel):
     """
     OpenPortResponseDto
     """ # noqa: E501
-    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1787223157468]})
+    timestamp: Union[StrictFloat, StrictInt] = Field(description="Timestamp of the request in milliseconds", json_schema_extra={"examples": [1788851167291]})
     api_status: StrictStr = Field(description="API status message", alias="apiStatus", json_schema_extra={"examples": ["success"]})
     api_code: Union[StrictFloat, StrictInt] = Field(description="API status code", alias="apiCode", json_schema_extra={"examples": [200]})
     meta: OpenPortMetaDto = Field(description="Metadata about the request")
     data: List[Union[StrictFloat, StrictInt]] = Field(description="List of open ports found")
-    __properties: ClassVar[List[str]] = ["timestamp", "apiStatus", "apiCode", "meta", "data"]
+    services: Optional[List[PortServiceDetectionResultDto]] = Field(default=None, description="Service/version detection results, present only when detectServices was requested and succeeded")
+    services_error: Optional[StrictStr] = Field(default=None, description="Present only when detectServices was requested but could not complete (e.g. nmap error/timeout) — the port list in `data` is still accurate regardless", alias="servicesError", json_schema_extra={"examples": ["Service detection could not complete for this target; the port list above is still accurate."]})
+    __properties: ClassVar[List[str]] = ["timestamp", "apiStatus", "apiCode", "meta", "data", "services", "servicesError"]
 
     @field_validator('api_status')
     def api_status_validate_enum(cls, value):
@@ -84,6 +87,13 @@ class OpenPortResponseDto(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of meta
         if self.meta:
             _dict['meta'] = self.meta.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in services (list)
+        _items = []
+        if self.services:
+            for _item_services in self.services:
+                if _item_services:
+                    _items.append(_item_services.to_dict())
+            _dict['services'] = _items
         return _dict
 
     @classmethod
@@ -100,7 +110,9 @@ class OpenPortResponseDto(BaseModel):
             "apiStatus": obj.get("apiStatus"),
             "apiCode": obj.get("apiCode"),
             "meta": OpenPortMetaDto.from_dict(obj["meta"]) if obj.get("meta") is not None else None,
-            "data": obj.get("data")
+            "data": obj.get("data"),
+            "services": [PortServiceDetectionResultDto.from_dict(_item) for _item in obj["services"]] if obj.get("services") is not None else None,
+            "servicesError": obj.get("servicesError")
         })
         return _obj
 

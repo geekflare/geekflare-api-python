@@ -36,16 +36,16 @@ class WebScrapeMetaDto(BaseModel):
     block_ads: StrictBool = Field(description="Whether ads were blocked", alias="blockAds", json_schema_extra={"examples": [True]})
     render_js: StrictBool = Field(description="Whether JavaScript was rendered for this request (resolved automatically unless explicitly set)", alias="renderJS", json_schema_extra={"examples": [True]})
     stealth: StrictBool = Field(description="Whether stealth mode was enabled", json_schema_extra={"examples": [False]})
-    wait_time: Union[StrictFloat, StrictInt] = Field(description="Seconds to wait after page load before capturing content. Helps bypass lazy-loaded content and bot checks.", alias="waitTime", json_schema_extra={"examples": [2.5]})
     proxy_mode: StrictStr = Field(description="Proxy mode requested for this request, echoed as a string (\"false\", \"auto\", or \"true\")", alias="proxyMode", json_schema_extra={"examples": ["false"]})
     proxy_used: StrictBool = Field(description="Whether a proxy was actually used for this request. Always matches proxyMode when it's `false` or `true`; depends on the outcome of the auto-retry when proxyMode is `auto`.", alias="proxyUsed", json_schema_extra={"examples": [False]})
+    wait_time: Union[StrictFloat, StrictInt] = Field(description="Seconds to wait after page load before capturing content. Helps bypass lazy-loaded content and bot checks.", alias="waitTime", json_schema_extra={"examples": [2.5]})
     proxy_country: Optional[StrictStr] = Field(default=None, description="Proxy country used, if any", alias="proxyCountry")
     extraction_mode: StrictStr = Field(description="Extraction mode (only used if format=json)", alias="extractionMode", json_schema_extra={"examples": ["default"]})
     template: Optional[StrictStr] = Field(default=None, description="Extraction template used, if extractionMode was `template`", json_schema_extra={"examples": ["product"]})
     extraction_schema: ExtractionSchemaDto = Field(description="Extraction schema (optional in default mode, required in css/xpath)", alias="extractionSchema")
     test: TestMetaDto = Field(description="Test details object")
     ai_prompt_type: Optional[StrictStr] = Field(default=None, description="The aiPrompt.type used for this request, if any", alias="aiPromptType", json_schema_extra={"examples": ["prompt"]})
-    __properties: ClassVar[List[str]] = ["url", "device", "format", "fileOutput", "blockAds", "renderJS", "stealth", "waitTime", "proxyMode", "proxyUsed", "proxyCountry", "extractionMode", "template", "extractionSchema", "test", "aiPromptType"]
+    __properties: ClassVar[List[str]] = ["url", "device", "format", "fileOutput", "blockAds", "renderJS", "stealth", "proxyMode", "proxyUsed", "waitTime", "proxyCountry", "extractionMode", "template", "extractionSchema", "test", "aiPromptType"]
 
     @field_validator('device')
     def device_validate_enum(cls, value):
@@ -136,9 +136,9 @@ class WebScrapeMetaDto(BaseModel):
             "blockAds": obj.get("blockAds"),
             "renderJS": obj.get("renderJS"),
             "stealth": obj.get("stealth"),
-            "waitTime": obj.get("waitTime") if obj.get("waitTime") is not None else 0,
             "proxyMode": obj.get("proxyMode"),
             "proxyUsed": obj.get("proxyUsed"),
+            "waitTime": obj.get("waitTime") if obj.get("waitTime") is not None else 0,
             "proxyCountry": obj.get("proxyCountry"),
             "extractionMode": obj.get("extractionMode"),
             "template": obj.get("template"),

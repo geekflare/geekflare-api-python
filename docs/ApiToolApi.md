@@ -4,6 +4,7 @@ All URIs are relative to *https://api.geekflare.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**brand**](ApiToolApi.md#brand) | **POST** /brand | Get brand data for a domain
 [**broken_link**](ApiToolApi.md#broken_link) | **POST** /brokenlink | Check if a webpage contains broken links
 [**dns_record**](ApiToolApi.md#dns_record) | **POST** /dnsrecord | Retrieve DNS records for a given domain
 [**dns_sec**](ApiToolApi.md#dns_sec) | **POST** /dnssec | Check if DNSSEC is enabled for a domain
@@ -22,6 +23,87 @@ Method | HTTP request | Description
 [**url2_pdf**](ApiToolApi.md#url2_pdf) | **POST** /url2pdf | Capture a full-page Url2Pdf of a website
 [**web_scrape**](ApiToolApi.md#web_scrape) | **POST** /webscraping | Scrape a webpage with custom options
 
+
+# **brand**
+> BrandResponseDto brand(brand_dto)
+
+Get brand data for a domain
+
+Retrieve structured brand information for a website domain, including key brand details useful for identifying and understanding a website or company. Coverage varies by site — not every domain publishes every data point (logos, social profiles, company details, etc.), so fields may be omitted or null when unavailable.
+
+### Example
+
+* Api Key Authentication (x-api-key):
+
+```python
+import geekflare_api
+from geekflare_api.models.brand_dto import BrandDto
+from geekflare_api.models.brand_response_dto import BrandResponseDto
+from geekflare_api.rest import ApiException
+from pprint import pprint
+
+# Defining the host is optional and defaults to https://api.geekflare.com
+# See configuration.py for a list of all supported configuration parameters.
+configuration = geekflare_api.Configuration(
+    host = "https://api.geekflare.com"
+)
+
+# The client must configure the authentication and authorization parameters
+# in accordance with the API server security policy.
+# Examples for each auth method are provided below, use the example that
+# satisfies your auth use case.
+
+# Configure API key authorization: x-api-key
+configuration.api_key['x-api-key'] = os.environ["API_KEY"]
+
+# Uncomment below to setup prefix (e.g. Bearer) for API key, if needed
+# configuration.api_key_prefix['x-api-key'] = 'Bearer'
+
+# Enter a context with an instance of the API client
+with geekflare_api.ApiClient(configuration) as api_client:
+    # Create an instance of the API class
+    api_instance = geekflare_api.ApiToolApi(api_client)
+    brand_dto = {"url":"https://databox.com"} # BrandDto | 
+
+    try:
+        # Get brand data for a domain
+        api_response = api_instance.brand(brand_dto)
+        print("The response of ApiToolApi->brand:\n")
+        pprint(api_response)
+    except Exception as e:
+        print("Exception when calling ApiToolApi->brand: %s\n" % e)
+```
+
+
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **brand_dto** | [**BrandDto**](BrandDto.md)|  | 
+
+### Return type
+
+[**BrandResponseDto**](BrandResponseDto.md)
+
+### Authorization
+
+[x-api-key](../README.md#x-api-key)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successfully retrieved brand data |  -  |
+**400** | Invalid URL. |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **broken_link**
 > BrokenLinkResponseDto broken_link(broken_link_dto)
@@ -393,7 +475,7 @@ configuration.api_key['x-api-key'] = os.environ["API_KEY"]
 with geekflare_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = geekflare_api.ApiToolApi(api_client)
-    load_time_dto = geekflare_api.LoadTimeDto() # LoadTimeDto | 
+    load_time_dto = {url=https://example.com} # LoadTimeDto | 
 
     try:
         # Measure the page load time for a given URL
@@ -1387,7 +1469,7 @@ configuration.api_key['x-api-key'] = os.environ["API_KEY"]
 with geekflare_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = geekflare_api.ApiToolApi(api_client)
-    web_scrape_dto = geekflare_api.WebScrapeDto() # WebScrapeDto | 
+    web_scrape_dto = {"url":"https://example.com"} # WebScrapeDto | 
 
     try:
         # Scrape a webpage with custom options

@@ -10,6 +10,8 @@ Name | Type | Description | Notes
 **api_code** | **float** | API status code | 
 **meta** | [**OpenPortMetaDto**](OpenPortMetaDto.md) | Metadata about the request | 
 **data** | **List[float]** | List of open ports found | 
+**services** | [**List[PortServiceDetectionResultDto]**](PortServiceDetectionResultDto.md) | Service/version detection results, present only when detectServices was requested and succeeded | [optional] 
+**services_error** | **str** | Present only when detectServices was requested but could not complete (e.g. nmap error/timeout) — the port list in &#x60;data&#x60; is still accurate regardless | [optional] 
 
 ## Example
 

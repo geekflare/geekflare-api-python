@@ -64,9 +64,3 @@ target/
 
 # Ipython Notebook
 .ipynb_checkpoints
-
-test.py
-key.pem
-mcp-publisher.exe
-mcp-publisher.tar.gz
-openapi.json

@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **url** | **str** | The scanned URL | 
 **top_ports** | **float** | Top ports scanned (if any) | [optional] 
 **port_ranges** | **str** | Custom port ranges scanned (if any) | [optional] 
+**detect_services** | **bool** | Whether service/version detection was requested for this scan | [optional] 
 **test** | [**TestMetaDto**](TestMetaDto.md) | Test details object | 
 
 ## Example
