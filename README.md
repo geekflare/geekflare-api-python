@@ -3,7 +3,7 @@
 Official Python SDK for the [Geekflare](https://geekflare.com/api/).
 
 - API version: 1.0.0
-- Package version: 0.3.1
+- Package version: 0.3.2
 
 ## Requirements.
 
