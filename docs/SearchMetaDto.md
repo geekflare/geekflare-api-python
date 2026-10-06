@@ -6,10 +6,16 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **query** | **str** | Original query | 
+**limit** | **float** | Number of results requested | [optional] 
 **count** | **float** | Number of results returned | 
 **source** | **List[str]** | Search source used | 
 **location** | **str** | Country used for ranking | 
+**city** | **str** | City used for localized results, if one was requested | [optional] 
 **time** | **str** | Time filter applied | 
+**category** | **str** | Category filter applied | [optional] 
+**include_domains** | **List[str]** | Domains results were restricted to, if any | [optional] 
+**exclude_domains** | **List[str]** | Domains excluded from results, if any | [optional] 
+**format** | **str** | Output format requested | [optional] 
 **scrape** | **bool** | Whether URL scraping was enabled | 
 **scrape_limit** | **float** | Number of URLs scraped | 
 **test** | [**TestMetaDto**](TestMetaDto.md) | Test metadata | 

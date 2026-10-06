@@ -14,7 +14,7 @@
 """  # noqa: E501
 
 
-__version__ = "0.3.1"
+__version__ = "0.3.2"
 
 # Define package exports
 __all__ = [
@@ -122,6 +122,19 @@ __all__ = [
     "SearchRequestDto",
     "SearchResponseDto",
     "SearchResultItemDto",
+    "SearchSerpDataDto",
+    "SearchSerpDataDtoAiOverview",
+    "SearchSerpDataDtoAiOverviewReferencesInner",
+    "SearchSerpDataDtoGeneral",
+    "SearchSerpDataDtoInput",
+    "SearchSerpDataDtoNavigationInner",
+    "SearchSerpDataDtoOrganicInner",
+    "SearchSerpDataDtoOrganicInnerExtensionsInner",
+    "SearchSerpDataDtoPagination",
+    "SearchSerpDataDtoPaginationPagesInner",
+    "SearchSerpDataDtoPeopleAlsoAskInner",
+    "SearchSerpDataDtoRelatedInner",
+    "SearchSerpResponseDto",
     "SelectorExtractionFieldDto",
     "SentimentAiPromptDto",
     "ServiceHealthResponseDto",
@@ -264,6 +277,19 @@ from geekflare_api.models.search_meta_dto import SearchMetaDto as SearchMetaDto
 from geekflare_api.models.search_request_dto import SearchRequestDto as SearchRequestDto
 from geekflare_api.models.search_response_dto import SearchResponseDto as SearchResponseDto
 from geekflare_api.models.search_result_item_dto import SearchResultItemDto as SearchResultItemDto
+from geekflare_api.models.search_serp_data_dto import SearchSerpDataDto as SearchSerpDataDto
+from geekflare_api.models.search_serp_data_dto_ai_overview import SearchSerpDataDtoAiOverview as SearchSerpDataDtoAiOverview
+from geekflare_api.models.search_serp_data_dto_ai_overview_references_inner import SearchSerpDataDtoAiOverviewReferencesInner as SearchSerpDataDtoAiOverviewReferencesInner
+from geekflare_api.models.search_serp_data_dto_general import SearchSerpDataDtoGeneral as SearchSerpDataDtoGeneral
+from geekflare_api.models.search_serp_data_dto_input import SearchSerpDataDtoInput as SearchSerpDataDtoInput
+from geekflare_api.models.search_serp_data_dto_navigation_inner import SearchSerpDataDtoNavigationInner as SearchSerpDataDtoNavigationInner
+from geekflare_api.models.search_serp_data_dto_organic_inner import SearchSerpDataDtoOrganicInner as SearchSerpDataDtoOrganicInner
+from geekflare_api.models.search_serp_data_dto_organic_inner_extensions_inner import SearchSerpDataDtoOrganicInnerExtensionsInner as SearchSerpDataDtoOrganicInnerExtensionsInner
+from geekflare_api.models.search_serp_data_dto_pagination import SearchSerpDataDtoPagination as SearchSerpDataDtoPagination
+from geekflare_api.models.search_serp_data_dto_pagination_pages_inner import SearchSerpDataDtoPaginationPagesInner as SearchSerpDataDtoPaginationPagesInner
+from geekflare_api.models.search_serp_data_dto_people_also_ask_inner import SearchSerpDataDtoPeopleAlsoAskInner as SearchSerpDataDtoPeopleAlsoAskInner
+from geekflare_api.models.search_serp_data_dto_related_inner import SearchSerpDataDtoRelatedInner as SearchSerpDataDtoRelatedInner
+from geekflare_api.models.search_serp_response_dto import SearchSerpResponseDto as SearchSerpResponseDto
 from geekflare_api.models.selector_extraction_field_dto import SelectorExtractionFieldDto as SelectorExtractionFieldDto
 from geekflare_api.models.sentiment_ai_prompt_dto import SentimentAiPromptDto as SentimentAiPromptDto
 from geekflare_api.models.service_health_response_dto import ServiceHealthResponseDto as ServiceHealthResponseDto

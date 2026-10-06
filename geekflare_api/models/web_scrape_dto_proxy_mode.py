@@ -25,7 +25,7 @@ WEBSCRAPEDTOPROXYMODE_ONE_OF_SCHEMAS = ["bool", "str"]
 
 class WebScrapeDtoProxyMode(BaseModel):
     """
-    Whether to route the request through a proxy. `false` never uses a proxy (default), `auto` tries without a proxy first and retries through one if the site blocks the request, `true` always uses a proxy.
+    Controls when a proxy is used. `false` doesn't use a proxy (default), `auto` tries without a proxy first and retries through one if the site blocks the request, `true` always uses a proxy. `proxyMode` is optional — to route through a proxy in a specific country, you can set `proxyCountry` on its own.
     """
     # data type: bool
     oneof_schema_1_validator: Optional[StrictBool] = Field(default=None, json_schema_extra={"examples": [True]})

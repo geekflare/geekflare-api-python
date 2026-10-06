@@ -1,6 +1,6 @@
 # WebScrapeDtoAiPrompt
 
-Ask AI to extract or analyze the scraped page. Always runs against the Markdown of the page regardless of the format field. Adds +6 credits on top of the base scraping cost.
+Ask AI to extract or analyze the scraped page. Always runs against the Markdown of the page regardless of the format field. Adds +7 credits on top of the base scraping cost.
 
 ## Properties
 

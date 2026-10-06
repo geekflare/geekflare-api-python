@@ -22,11 +22,12 @@ from geekflare_api.models.image_search_response_dto import ImageSearchResponseDt
 from geekflare_api.models.search_html_response_dto import SearchHtmlResponseDto
 from geekflare_api.models.search_markdown_response_dto import SearchMarkdownResponseDto
 from geekflare_api.models.search_response_dto import SearchResponseDto
+from geekflare_api.models.search_serp_response_dto import SearchSerpResponseDto
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-SEARCH200RESPONSE_ONE_OF_SCHEMAS = ["GroundedAnswerResponseDto", "ImageSearchResponseDto", "SearchHtmlResponseDto", "SearchMarkdownResponseDto", "SearchResponseDto"]
+SEARCH200RESPONSE_ONE_OF_SCHEMAS = ["GroundedAnswerResponseDto", "ImageSearchResponseDto", "SearchHtmlResponseDto", "SearchMarkdownResponseDto", "SearchResponseDto", "SearchSerpResponseDto"]
 
 class Search200Response(BaseModel):
     """
@@ -42,8 +43,10 @@ class Search200Response(BaseModel):
     oneof_schema_4_validator: Optional[SearchHtmlResponseDto] = None
     # data type: GroundedAnswerResponseDto
     oneof_schema_5_validator: Optional[GroundedAnswerResponseDto] = None
-    actual_instance: Optional[Union[GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto]] = None
-    one_of_schemas: Set[str] = { "GroundedAnswerResponseDto", "ImageSearchResponseDto", "SearchHtmlResponseDto", "SearchMarkdownResponseDto", "SearchResponseDto" }
+    # data type: SearchSerpResponseDto
+    oneof_schema_6_validator: Optional[SearchSerpResponseDto] = None
+    actual_instance: Optional[Union[GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto, SearchSerpResponseDto]] = None
+    one_of_schemas: Set[str] = { "GroundedAnswerResponseDto", "ImageSearchResponseDto", "SearchHtmlResponseDto", "SearchMarkdownResponseDto", "SearchResponseDto", "SearchSerpResponseDto" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -91,12 +94,17 @@ class Search200Response(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `GroundedAnswerResponseDto`")
         else:
             match += 1
+        # validate data type: SearchSerpResponseDto
+        if not isinstance(v, SearchSerpResponseDto):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `SearchSerpResponseDto`")
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto, SearchSerpResponseDto. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto, SearchSerpResponseDto. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -141,13 +149,19 @@ class Search200Response(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into SearchSerpResponseDto
+        try:
+            instance.actual_instance = SearchSerpResponseDto.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto, SearchSerpResponseDto. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into Search200Response with oneOf schemas: GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto, SearchSerpResponseDto. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -161,7 +175,7 @@ class Search200Response(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], GroundedAnswerResponseDto, ImageSearchResponseDto, SearchHtmlResponseDto, SearchMarkdownResponseDto, SearchResponseDto, SearchSerpResponseDto]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

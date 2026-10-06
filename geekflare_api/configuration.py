@@ -114,7 +114,6 @@ AuthSettings = TypedDict(
         "x-api-key": APIKeyAuthSetting,
         "bearer-token": BearerFormatAuthSetting,
         "gf_auth_session": APIKeyAuthSetting,
-        "x-internal-key": APIKeyAuthSetting,
     },
     total=False,
 )
@@ -563,15 +562,6 @@ conf = geekflare_api.Configuration(
                     'gf_auth_session',
                 ),
             }
-        if 'x-internal-key' in self.api_key:
-            auth['x-internal-key'] = {
-                'type': 'api_key',
-                'in': 'header',
-                'key': 'x-internal-key',
-                'value': self.get_api_key_with_prefix(
-                    'x-internal-key',
-                ),
-            }
         return auth
 
     def to_debug_report(self) -> str:
@@ -583,7 +573,7 @@ conf = geekflare_api.Configuration(
                "OS: {env}\n"\
                "Python Version: {pyversion}\n"\
                "Version of the API: 1.0.0\n"\
-               "SDK Package Version: 0.3.1".\
+               "SDK Package Version: 0.3.2".\
                format(env=sys.platform, pyversion=sys.version)
 
     def get_host_settings(self) -> List[HostSetting]:

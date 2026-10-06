@@ -31,7 +31,7 @@ WEBSCRAPEDTOAIPROMPT_ONE_OF_SCHEMAS = ["KeywordsAiPromptDto", "ListingAiPromptDt
 
 class WebScrapeDtoAiPrompt(BaseModel):
     """
-    Ask AI to extract or analyze the scraped page. Always runs against the Markdown of the page regardless of the format field. Adds +6 credits on top of the base scraping cost.
+    Ask AI to extract or analyze the scraped page. Always runs against the Markdown of the page regardless of the format field. Adds +7 credits on top of the base scraping cost.
     """
     # data type: PromptAiPromptDto
     oneof_schema_1_validator: Optional[PromptAiPromptDto] = None

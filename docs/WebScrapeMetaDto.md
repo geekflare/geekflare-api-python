@@ -13,10 +13,10 @@ Name | Type | Description | Notes
 **render_js** | **bool** | Whether JavaScript was rendered for this request (resolved automatically unless explicitly set) | 
 **stealth** | **bool** | Whether stealth mode was enabled | 
 **proxy_mode** | **str** | Proxy mode requested for this request, echoed as a string (\&quot;false\&quot;, \&quot;auto\&quot;, or \&quot;true\&quot;) | 
-**proxy_used** | **bool** | Whether a proxy was actually used for this request. Always matches proxyMode when it&#39;s &#x60;false&#x60; or &#x60;true&#x60;; depends on the outcome of the auto-retry when proxyMode is &#x60;auto&#x60;. | 
+**proxy_used** | **bool** | Whether a proxy was actually used for this request. When proxyMode is &#x60;auto&#x60;, this depends on whether the site blocked the initial request. | 
 **wait_time** | **float** | Seconds to wait after page load before capturing content. Helps bypass lazy-loaded content and bot checks. | [default to 0]
 **proxy_country** | **str** | Proxy country used, if any | [optional] 
-**extraction_mode** | **str** | Extraction mode (only used if format&#x3D;json) | 
+**extraction_mode** | **str** | Extraction mode used for this request. When an extraction mode is requested, the result is returned as JSON. | 
 **template** | **str** | Extraction template used, if extractionMode was &#x60;template&#x60; | [optional] 
 **extraction_schema** | [**ExtractionSchemaDto**](ExtractionSchemaDto.md) | Extraction schema (optional in default mode, required in css/xpath) | 
 **test** | [**TestMetaDto**](TestMetaDto.md) | Test details object | 

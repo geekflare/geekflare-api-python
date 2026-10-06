@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from geekflare_api.models.test_meta_dto import TestMetaDto
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,14 +29,20 @@ class SearchMetaDto(BaseModel):
     SearchMetaDto
     """ # noqa: E501
     query: StrictStr = Field(description="Original query", json_schema_extra={"examples": ["best running shoes"]})
+    limit: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, description="Number of results requested", json_schema_extra={"examples": [10]})
     count: Union[StrictFloat, StrictInt] = Field(description="Number of results returned", json_schema_extra={"examples": [10]})
     source: List[StrictStr] = Field(description="Search source used", json_schema_extra={"examples": ["web"]})
     location: StrictStr = Field(description="Country used for ranking", json_schema_extra={"examples": ["us"]})
+    city: Optional[StrictStr] = Field(default=None, description="City used for localized results, if one was requested", json_schema_extra={"examples": ["London,England,United Kingdom"]})
     time: StrictStr = Field(description="Time filter applied", json_schema_extra={"examples": ["d"]})
+    category: Optional[StrictStr] = Field(default=None, description="Category filter applied", json_schema_extra={"examples": ["general"]})
+    include_domains: Optional[List[StrictStr]] = Field(default=None, description="Domains results were restricted to, if any", alias="includeDomains", json_schema_extra={"examples": [["reddit.com"]]})
+    exclude_domains: Optional[List[StrictStr]] = Field(default=None, description="Domains excluded from results, if any", alias="excludeDomains", json_schema_extra={"examples": [["pinterest.com"]]})
+    format: Optional[StrictStr] = Field(default=None, description="Output format requested", json_schema_extra={"examples": ["json"]})
     scrape: StrictBool = Field(description="Whether URL scraping was enabled", json_schema_extra={"examples": [False]})
     scrape_limit: Union[StrictFloat, StrictInt] = Field(description="Number of URLs scraped", alias="scrapeLimit", json_schema_extra={"examples": [3]})
     test: TestMetaDto = Field(description="Test metadata")
-    __properties: ClassVar[List[str]] = ["query", "count", "source", "location", "time", "scrape", "scrapeLimit", "test"]
+    __properties: ClassVar[List[str]] = ["query", "limit", "count", "source", "location", "city", "time", "category", "includeDomains", "excludeDomains", "format", "scrape", "scrapeLimit", "test"]
 
     model_config = ConfigDict(
         validate_by_name=True,
@@ -93,10 +99,16 @@ class SearchMetaDto(BaseModel):
 
         _obj = cls.model_validate({
             "query": obj.get("query"),
+            "limit": obj.get("limit"),
             "count": obj.get("count"),
             "source": obj.get("source"),
             "location": obj.get("location"),
+            "city": obj.get("city"),
             "time": obj.get("time"),
+            "category": obj.get("category"),
+            "includeDomains": obj.get("includeDomains"),
+            "excludeDomains": obj.get("excludeDomains"),
+            "format": obj.get("format"),
             "scrape": obj.get("scrape"),
             "scrapeLimit": obj.get("scrapeLimit"),
             "test": TestMetaDto.from_dict(obj["test"]) if obj.get("test") is not None else None

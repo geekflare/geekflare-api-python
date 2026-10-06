@@ -772,7 +772,7 @@ Name | Type | Description  | Notes
 
 Scan a website for open ports
 
-Scan a domain or IP for open TCP ports, either across the top N most common ports or a custom range you specify. Useful for surface-level network security audits and exposure checks.
+Scan a domain or IP for open TCP ports, either across the top N most common ports or a custom range you specify, with optional service/version detection on the ports found open. Useful for surface-level network security audits and exposure checks.
 
 ### Example
 
@@ -806,7 +806,7 @@ configuration.api_key['x-api-key'] = os.environ["API_KEY"]
 with geekflare_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = geekflare_api.ApiToolApi(api_client)
-    open_port_dto = geekflare_api.OpenPortDto() # OpenPortDto | 
+    open_port_dto = {url=https://example.com} # OpenPortDto | 
 
     try:
         # Scan a website for open ports
@@ -1103,7 +1103,13 @@ Name | Type | Description  | Notes
 
 Search API for AI Agents & LLMs
 
-Structured search results from the web or news. Strips out ads and HTML noise to provide pure data in JSON, Markdown, or HTML. Fully supports AI-grounded answers, search-with-scrape, image search, and targeted Web or News sourcing.
+Search the web, news, or images and get structured results with ads and HTML noise removed, as JSON, Markdown, or HTML.
+
+Choose a mode:
+- **Standard search** — web, news, or image results, with optional time, category, domain, city, and device filters.
+- **Search with scrape** — set `scrape: true` to include the full content of the top result pages.
+- **Grounded answer** — set `groundedAnswer: true` for an AI-synthesized answer with citations.
+- **SERP** — set `serp: true` for the full Google results page (organic results, ads, related searches, People Also Ask).
 
 ### Example
 
@@ -1137,7 +1143,7 @@ configuration.api_key['x-api-key'] = os.environ["API_KEY"]
 with geekflare_api.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = geekflare_api.ApiToolApi(api_client)
-    search_request_dto = geekflare_api.SearchRequestDto() # SearchRequestDto | 
+    search_request_dto = {"query":"best running shoes"} # SearchRequestDto | 
 
     try:
         # Search API for AI Agents & LLMs
@@ -1435,7 +1441,7 @@ Name | Type | Description  | Notes
 
 Scrape a webpage with custom options
 
-Fetch a page and return content as Markdown, HTML, JSON, or plain text. Automatically detects whether JavaScript rendering is needed, with optional stealth mode, `proxyMode`-controlled proxy routing, CSS/XPath field extraction, and ready-made `product`/`contact` extraction templates.
+Fetch a page and return content as Markdown, HTML, JSON, or plain text. Automatically detects whether JavaScript rendering is needed, with optional stealth mode, proxy routing (`proxyCountry`, with optional `proxyMode` control), CSS/XPath field extraction, and ready-made `product`/`contact` extraction templates.
 
 ### Example
 

@@ -97,7 +97,7 @@
     },
     "/webscraping": {
       "post": {
-        "description": "Fetch a page and return content as Markdown, HTML, JSON, or plain text. Automatically detects whether JavaScript rendering is needed, with optional stealth mode, `proxyMode`-controlled proxy routing, CSS/XPath field extraction, and ready-made `product`/`contact` extraction templates.",
+        "description": "Fetch a page and return content as Markdown, HTML, JSON, or plain text. Automatically detects whether JavaScript rendering is needed, with optional stealth mode, proxy routing (`proxyCountry`, with optional `proxyMode` control), CSS/XPath field extraction, and ready-made `product`/`contact` extraction templates.",
         "operationId": "webScrape",
         "parameters": [],
         "requestBody": {
@@ -127,14 +127,20 @@
                   "summary": "With proxy",
                   "value": {
                     "url": "https://example.com",
-                    "proxyMode": true,
                     "proxyCountry": "gb"
+                  }
+                },
+                "withProxyAuto": {
+                  "summary": "Proxy on demand (auto)",
+                  "value": {
+                    "url": "https://example.com",
+                    "proxyMode": "auto"
                   }
                 },
                 "withTemplate": {
                   "summary": "With extraction template",
                   "value": {
-                    "url": "https://example.com/products/laptop-107",
+                    "url": "https://testingurl.dev/scraping/ecommerce/product/1",
                     "extractionMode": "template",
                     "template": "product"
                   }
@@ -835,7 +841,7 @@
     },
     "/openport": {
       "post": {
-        "description": "Scan a domain or IP for open TCP ports, either across the top N most common ports or a custom range you specify. Useful for surface-level network security audits and exposure checks.",
+        "description": "Scan a domain or IP for open TCP ports, either across the top N most common ports or a custom range you specify, with optional service/version detection on the ports found open. Useful for surface-level network security audits and exposure checks.",
         "operationId": "openPorts",
         "parameters": [],
         "requestBody": {
@@ -844,6 +850,35 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/OpenPortDto"
+              },
+              "examples": {
+                "default": {
+                  "summary": "Default",
+                  "value": {
+                    "url": "https://example.com"
+                  }
+                },
+                "topPorts": {
+                  "summary": "Top ports",
+                  "value": {
+                    "url": "https://example.com",
+                    "topPorts": 100
+                  }
+                },
+                "portRanges": {
+                  "summary": "Port ranges",
+                  "value": {
+                    "url": "https://example.com",
+                    "portRanges": "80,443,1000-1010"
+                  }
+                },
+                "detectServices": {
+                  "summary": "Detect services",
+                  "value": {
+                    "url": "https://example.com",
+                    "detectServices": true
+                  }
+                }
               }
             }
           }
@@ -1597,7 +1632,7 @@
     },
     "/search": {
       "post": {
-        "description": "Structured search results from the web or news. Strips out ads and HTML noise to provide pure data in JSON, Markdown, or HTML. Fully supports AI-grounded answers, search-with-scrape, image search, and targeted Web or News sourcing.",
+        "description": "Search the web, news, or images and get structured results with ads and HTML noise removed, as JSON, Markdown, or HTML.\n\nChoose a mode:\n- **Standard search** — web, news, or image results, with optional time, category, domain, city, and device filters.\n- **Search with scrape** — set `scrape: true` to include the full content of the top result pages.\n- **Grounded answer** — set `groundedAnswer: true` for an AI-synthesized answer with citations.\n- **SERP** — set `serp: true` for the full Google results page (organic results, ads, related searches, People Also Ask).",
         "operationId": "search",
         "parameters": [],
         "requestBody": {
@@ -1606,6 +1641,40 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/SearchRequestDto"
+              },
+              "examples": {
+                "default": {
+                  "summary": "Default",
+                  "value": {
+                    "query": "best running shoes"
+                  }
+                },
+                "serp": {
+                  "summary": "SERP (Google results)",
+                  "value": {
+                    "query": "best running shoes",
+                    "serp": true
+                  }
+                },
+                "serpCity": {
+                  "summary": "SERP with city targeting",
+                  "value": {
+                    "query": "best running shoes",
+                    "serp": true,
+                    "city": "London,England,United Kingdom"
+                  }
+                },
+                "serpFilters": {
+                  "summary": "SERP with filters (news, past week, excluded domain, limit)",
+                  "value": {
+                    "query": "best running shoes",
+                    "serp": true,
+                    "source": "news",
+                    "time": "w",
+                    "limit": 5,
+                    "excludeDomains": ["pinterest.com"]
+                  }
+                }
               }
             }
           }
@@ -1631,8 +1700,255 @@
                     },
                     {
                       "$ref": "#/components/schemas/GroundedAnswerResponseDto"
+                    },
+                    {
+                      "$ref": "#/components/schemas/SearchSerpResponseDto"
                     }
                   ]
+                },
+                "examples": {
+                  "standard": {
+                    "summary": "Standard search",
+                    "value": {
+                      "timestamp": 1778737930991,
+                      "apiStatus": "success",
+                      "apiCode": 200,
+                      "meta": {
+                        "query": "best running shoes",
+                        "count": 10,
+                        "source": ["web"],
+                        "location": "us",
+                        "time": "any",
+                        "scrape": false,
+                        "scrapeLimit": 3,
+                        "test": {
+                          "id": "abc123"
+                        }
+                      },
+                      "data": [
+                        {
+                          "title": "Best Running Shoes of 2026 — Tested & Reviewed",
+                          "url": "https://example.com/best-running-shoes",
+                          "snippet": "We tested over 100 pairs to find the best running shoes for every type of runner...",
+                          "date": "Jan 15, 2025",
+                          "position": 1
+                        },
+                        {
+                          "title": "Top 10 Running Shoes for 2026",
+                          "url": "https://example2.com/running-shoes",
+                          "snippet": "From track to trail, here are the top running shoes this year...",
+                          "position": 2
+                        }
+                      ]
+                    }
+                  },
+                  "serp": {
+                    "summary": "SERP (serp: true)",
+                    "value": {
+                      "timestamp": 1790698941310,
+                      "apiStatus": "success",
+                      "apiCode": 200,
+                      "meta": {
+                        "query": "ats for agencies",
+                        "limit": 10,
+                        "count": 10,
+                        "source": ["web"],
+                        "format": "json",
+                        "location": "us",
+                        "time": "any",
+                        "category": "general",
+                        "scrape": false,
+                        "scrapeLimit": 3,
+                        "test": {
+                          "id": "9f455f1a-5df8-4658-97fd-1a286789dc67"
+                        }
+                      },
+                      "data": {
+                        "general": {
+                          "search_engine": "google",
+                          "query": "ats for agencies",
+                          "detected_query": "ats for agencies",
+                          "results_cnt": 128,
+                          "search_time": 0.24,
+                          "language": "en",
+                          "country_code": "US",
+                          "location": "United States",
+                          "gl": "US",
+                          "mobile": false,
+                          "basic_view": false,
+                          "search_type": "text",
+                          "page_title": "ats for agencies - Google Search",
+                          "timestamp": "2026-09-29T16:22:20.881Z"
+                        },
+                        "input": {
+                          "original_url": "https://www.google.com/search?q=ats%20for%20agencies&gl=us",
+                          "request_id": "hl_309dd1bd_fawunsu8b5k"
+                        },
+                        "navigation": [
+                          {
+                            "title": "Images",
+                            "href": "https://www.google.com/search?q=ats+for+agencies&udm=2"
+                          },
+                          {
+                            "title": "News",
+                            "href": "https://www.google.com/search?q=ats+for+agencies&tbm=nws"
+                          },
+                          {
+                            "title": "Videos",
+                            "href": "https://www.google.com/search?q=ats+for+agencies&udm=vids"
+                          }
+                        ],
+                        "organic": [
+                          {
+                            "link": "https://recruiterflow.com/",
+                            "source": "Recruiterflow",
+                            "display_link": "https://recruiterflow.com",
+                            "title": "Recruiterflow - Best AI-Native ATS & CRM for Executive ...",
+                            "description": "Recruiterflow is the best AI-Native ATS & CRM software for executive search firms, recruiting agencies and staffing agencies. It comes equipped with ATS, ...",
+                            "snippet_highlighted_words": [
+                              "Recruiterflow is the best AI-Native ATS & CRM software"
+                            ],
+                            "icon": "data:image/webp;base64,...",
+                            "rank": 1,
+                            "global_rank": 1
+                          },
+                          {
+                            "link": "https://recruiteze.com/ats-for-staffing-agencies/",
+                            "source": "Recruiteze",
+                            "display_link": "https://recruiteze.com › ats-for-staffing-agencies",
+                            "title": "9 Best ATS For Staffing Agencies [New Picks]",
+                            "description": "Hiring through ATS or recruiting software helps staffing agencies provide the best-fit, talented and qualified candidates to the client company.",
+                            "snippet_highlighted_words": [
+                              "Hiring through ATS or recruiting software"
+                            ],
+                            "icon": "data:image/webp;base64,...",
+                            "rank": 3,
+                            "global_rank": 7
+                          },
+                          {
+                            "link": "https://smartsearchinc.com/ats-for-your-recruiting-agency-essential-guide/",
+                            "source": "SmartSearch Inc.",
+                            "display_link": "https://smartsearchinc.com › ats-for-your-recruiting-age...",
+                            "title": "Choosing the Right ATS for Your Recruiting Agency",
+                            "description": "Discover how to choose an innovative ATS for your recruiting agency's success. Learn key features, benefits, and tips to boost your staffing ...",
+                            "snippet_highlighted_words": ["ATS"],
+                            "extensions": [
+                              {
+                                "inline": true,
+                                "type": "text",
+                                "text": "Jul 15, 2025",
+                                "rank": 1
+                              }
+                            ],
+                            "icon": "data:image/webp;base64,...",
+                            "rank": 5,
+                            "global_rank": 9
+                          }
+                        ],
+                        "pagination": {
+                          "pages": [
+                            {
+                              "page": 2,
+                              "start": 10,
+                              "link": "https://www.google.com/search?q=ats+for+agencies&start=10"
+                            },
+                            {
+                              "page": 3,
+                              "start": 20,
+                              "link": "https://www.google.com/search?q=ats+for+agencies&start=20"
+                            }
+                          ],
+                          "current_page": 1,
+                          "next_page": 2,
+                          "next_page_start": 10,
+                          "next_page_link": "https://www.google.com/search?q=ats+for+agencies&start=10"
+                        },
+                        "related": [
+                          {
+                            "text": "Ats for agencies reddit",
+                            "link": "https://www.google.com/search?q=Ats+for+agencies+reddit",
+                            "rank": 1,
+                            "global_rank": 14
+                          },
+                          {
+                            "text": "Recruiterflow",
+                            "link": "https://www.google.com/search?q=Recruiterflow",
+                            "rank": 2,
+                            "global_rank": 15
+                          }
+                        ],
+                        "people_also_ask": [
+                          {
+                            "question": "What is the best ATS for recruiting agencies?",
+                            "question_type": "ai_overview",
+                            "rank": 1,
+                            "global_rank": 3
+                          },
+                          {
+                            "question": "What is an ATS vs CRM?",
+                            "question_link": "https://www.google.com/search?q=What+is+an+ATS+vs+CRM%3F",
+                            "question_type": "ai_overview",
+                            "rank": 3,
+                            "global_rank": 5
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "serpAiOverview": {
+                    "summary": "SERP with AI Overview",
+                    "value": {
+                      "timestamp": 1790698941310,
+                      "apiStatus": "success",
+                      "apiCode": 200,
+                      "meta": {
+                        "query": "laptops under $1000",
+                        "source": ["web"],
+                        "format": "json",
+                        "location": "us",
+                        "time": "any",
+                        "category": "general",
+                        "scrape": false,
+                        "scrapeLimit": 3,
+                        "test": {
+                          "id": "9f455f1a-5df8-4658-97fd-1a286789dc67"
+                        }
+                      },
+                      "data": {
+                        "general": {
+                          "search_engine": "google",
+                          "query": "laptops under $1000",
+                          "country_code": "US",
+                          "location": "United States",
+                          "search_type": "text"
+                        },
+                        "ai_overview": {
+                          "text": "The best laptops under $1,000 include the Apple MacBook Neo for everyday macOS use and the HP OmniBook 5 for top-tier Windows performance. Top Recommendations $799.00 Apple& more Offers an all-aluminum build, an A18 Pro chip, and long battery life. It serves as an ideal budget choice for students and general tasks. $862.49 HP& more Noted as one of the best overall Windows AI laptops. It features exceptional battery endurance and a dedicated neural processing unit (NPU). Where to Shop You can purchase or configure Apple models directly at the Apple Store. You can browse a wide inventory of Windows and gaming machines through Best Buy Laptops.",
+                          "html": "<div data-subtree=\"aimc\" ...>...</div>",
+                          "references": [
+                            {
+                              "title": "The Best Laptops Under $1,000 We've Tested for 2026 | PCMag",
+                              "url": "https://www.pcmag.com/picks/best-laptops-under-1000",
+                              "source": "PCMag",
+                              "snippet": "Tested Laptops Under $1,000: HP OmniBook 5 14 (best overall Windows, 34-hour battery); Apple MacBook Neo (best budget Mac, aluminum build); MSI Katana 15 HX (RTX 5..."
+                            },
+                            {
+                              "title": "laptops under $1000 - Best Buy",
+                              "url": "https://www.bestbuy.com/site/searchpage.jsp?id=pcat17071&st=laptops%20under%20%241000",
+                              "source": "Best Buy",
+                              "snippet": "Laptops under $1000: Dell 15.6\" 2K (i5, 8GB, 512GB, $649.99), HP Victus 15.6\" Gaming (Ryzen 7, 16GB, RTX 4050, $949.99), HP OmniBo..."
+                            },
+                            {
+                              "title": "What is the best laptop under $ 1000 US? - Reddit",
+                              "url": null,
+                              "source": "[www.reddit.com](https://www.reddit.com)",
+                              "snippet": "Specific Laptop Recommendations: Recommended laptops for graphically intensive medical imaging and 3D rendering under $1000 includ..."
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -2033,12 +2349,6 @@
         "in": "cookie",
         "name": "gf_auth_session",
         "description": "IDP session cookie"
-      },
-      "x-internal-key": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "x-internal-key",
-        "description": "Internal API key (Swagger only)"
       }
     },
     "schemas": {
@@ -2529,7 +2839,7 @@
             "description": "Whether to render JavaScript. If omitted, rendering is automatic: the page is fetched without a browser first, and JavaScript is only rendered if the page needs it. Set explicitly to true or false to force rendering on or off."
           },
           "proxyMode": {
-            "description": "Whether to route the request through a proxy. `false` never uses a proxy (default), `auto` tries without a proxy first and retries through one if the site blocks the request, `true` always uses a proxy.",
+            "description": "Controls when a proxy is used. `false` doesn't use a proxy (default), `auto` tries without a proxy first and retries through one if the site blocks the request, `true` always uses a proxy. `proxyMode` is optional — to route through a proxy in a specific country, you can set `proxyCountry` on its own.",
             "default": false,
             "oneOf": [
               {
@@ -2545,7 +2855,7 @@
           },
           "proxyCountry": {
             "type": "string",
-            "description": "Proxy country code to route the request. Used when a proxy is active (proxyMode is auto or true).",
+            "description": "Country code (ISO alpha-2) to route the request through a proxy in. Can be used on its own — `proxyMode` is not required. Combine it with `proxyMode` if you want control over when the proxy is used.",
             "example": "us"
           },
           "format": {
@@ -2586,7 +2896,7 @@
           },
           "extractionMode": {
             "type": "string",
-            "description": "Extraction mode (only used if format=json). Set to `template` to use a ready-made extraction template instead of a custom schema — see the `template` field.",
+            "description": "Extraction mode. JSON output is used automatically when an extraction mode is requested — you don't need to set `format` to `json`. Set to `template` to use a ready-made extraction template instead of a custom schema — see the `template` field.",
             "example": "default",
             "enum": ["default", "cssSchema", "xpathSchema", "template"],
             "default": "default"
@@ -2655,7 +2965,7 @@
             ]
           },
           "aiPrompt": {
-            "description": "Ask AI to extract or analyze the scraped page. Always runs against the Markdown of the page regardless of the format field. Adds +6 credits on top of the base scraping cost.",
+            "description": "Ask AI to extract or analyze the scraped page. Always runs against the Markdown of the page regardless of the format field. Adds +7 credits on top of the base scraping cost.",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/PromptAiPromptDto"
@@ -2839,7 +3149,7 @@
           },
           "proxyUsed": {
             "type": "boolean",
-            "description": "Whether a proxy was actually used for this request. Always matches proxyMode when it's `false` or `true`; depends on the outcome of the auto-retry when proxyMode is `auto`.",
+            "description": "Whether a proxy was actually used for this request. When proxyMode is `auto`, this depends on whether the site blocked the initial request.",
             "example": false
           },
           "waitTime": {
@@ -2854,7 +3164,7 @@
           },
           "extractionMode": {
             "type": "string",
-            "description": "Extraction mode (only used if format=json)",
+            "description": "Extraction mode used for this request. When an extraction mode is requested, the result is returned as JSON.",
             "example": "default"
           },
           "template": {
@@ -5765,6 +6075,11 @@
             "description": "Original query",
             "example": "best running shoes"
           },
+          "limit": {
+            "type": "number",
+            "description": "Number of results requested",
+            "example": 10
+          },
           "count": {
             "type": "number",
             "description": "Number of results returned",
@@ -5783,10 +6098,41 @@
             "description": "Country used for ranking",
             "example": "us"
           },
+          "city": {
+            "type": "string",
+            "description": "City used for localized results, if one was requested",
+            "example": "London,England,United Kingdom"
+          },
           "time": {
             "type": "string",
             "description": "Time filter applied",
             "example": "d"
+          },
+          "category": {
+            "type": "string",
+            "description": "Category filter applied",
+            "example": "general"
+          },
+          "includeDomains": {
+            "type": "array",
+            "description": "Domains results were restricted to, if any",
+            "items": {
+              "type": "string"
+            },
+            "example": ["reddit.com"]
+          },
+          "excludeDomains": {
+            "type": "array",
+            "description": "Domains excluded from results, if any",
+            "items": {
+              "type": "string"
+            },
+            "example": ["pinterest.com"]
+          },
+          "format": {
+            "type": "string",
+            "description": "Output format requested",
+            "example": "json"
           },
           "scrape": {
             "type": "boolean",
@@ -6068,6 +6414,369 @@
         },
         "required": ["timestamp", "apiStatus", "apiCode", "meta", "data"]
       },
+      "SearchSerpDataDto": {
+        "type": "object",
+        "properties": {
+          "general": {
+            "type": "object",
+            "properties": {
+              "search_engine": {
+                "type": "string",
+                "example": "google"
+              },
+              "query": {
+                "type": "string",
+                "description": "Query as searched",
+                "example": "ats for agencies"
+              },
+              "detected_query": {
+                "type": "string",
+                "example": "ats for agencies"
+              },
+              "results_cnt": {
+                "type": "number",
+                "description": "Approximate total results reported by Google",
+                "example": 128
+              },
+              "search_time": {
+                "type": "number",
+                "description": "Search time in seconds",
+                "example": 0.24
+              },
+              "language": {
+                "type": "string",
+                "example": "en"
+              },
+              "country_code": {
+                "type": "string",
+                "example": "US"
+              },
+              "location": {
+                "type": "string",
+                "description": "Location the search was targeted to",
+                "example": "United States"
+              },
+              "gl": {
+                "type": "string",
+                "example": "US"
+              },
+              "mobile": {
+                "type": "boolean",
+                "example": false
+              },
+              "basic_view": {
+                "type": "boolean",
+                "example": false
+              },
+              "search_type": {
+                "type": "string",
+                "example": "text"
+              },
+              "page_title": {
+                "type": "string",
+                "example": "ats for agencies - Google Search"
+              },
+              "timestamp": {
+                "type": "string",
+                "example": "2026-09-29T16:22:20.881Z"
+              }
+            },
+            "description": "Details about the search that was run"
+          },
+          "input": {
+            "type": "object",
+            "properties": {
+              "original_url": {
+                "type": "string",
+                "description": "Google search URL used",
+                "example": "https://www.google.com/search?q=ats%20for%20agencies&gl=us"
+              },
+              "request_id": {
+                "type": "string",
+                "example": "hl_309dd1bd_fawunsu8b5k"
+              }
+            }
+          },
+          "navigation": {
+            "type": "array",
+            "description": "Search vertical tabs shown on the page (Images, News, Videos, Maps, etc.)",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "Images"
+                },
+                "href": {
+                  "type": "string",
+                  "example": "https://www.google.com/search?q=ats+for+agencies&udm=2"
+                }
+              }
+            }
+          },
+          "organic": {
+            "type": "array",
+            "description": "Organic (non-ad) results",
+            "items": {
+              "type": "object",
+              "properties": {
+                "link": {
+                  "type": "string",
+                  "example": "https://recruiterflow.com/"
+                },
+                "source": {
+                  "type": "string",
+                  "example": "Recruiterflow"
+                },
+                "display_link": {
+                  "type": "string",
+                  "example": "https://recruiterflow.com"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Recruiterflow - Best AI-Native ATS & CRM for Executive ..."
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Recruiterflow is the best AI-Native ATS & CRM software for executive search firms..."
+                },
+                "snippet_highlighted_words": {
+                  "type": "array",
+                  "description": "Portions of the snippet Google highlights",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "extensions": {
+                  "type": "array",
+                  "description": "Extra info shown with the result, such as a date",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "inline": {
+                        "type": "boolean"
+                      },
+                      "type": {
+                        "type": "string",
+                        "example": "text"
+                      },
+                      "text": {
+                        "type": "string",
+                        "example": "Jul 15, 2025"
+                      },
+                      "rank": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "icon": {
+                  "type": "string",
+                  "description": "Site icon as a data URI"
+                },
+                "rank": {
+                  "type": "number",
+                  "description": "Position within this section",
+                  "example": 1
+                },
+                "global_rank": {
+                  "type": "number",
+                  "description": "Position across the whole results page",
+                  "example": 1
+                }
+              }
+            }
+          },
+          "news": {
+            "type": "array",
+            "description": "News results. Returned instead of `organic` when `source` is `news`.",
+            "items": {
+              "type": "object"
+            }
+          },
+          "images": {
+            "type": "array",
+            "description": "Image results. Returned instead of `organic` when `source` is `images`.",
+            "items": {
+              "type": "object"
+            }
+          },
+          "pagination": {
+            "type": "object",
+            "properties": {
+              "pages": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "page": {
+                      "type": "number",
+                      "example": 2
+                    },
+                    "start": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "link": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "current_page": {
+                "type": "number",
+                "example": 1
+              },
+              "next_page": {
+                "type": "number",
+                "example": 2
+              },
+              "next_page_start": {
+                "type": "number",
+                "example": 10
+              },
+              "next_page_link": {
+                "type": "string"
+              }
+            }
+          },
+          "related": {
+            "type": "array",
+            "description": "Related searches",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "example": "Ats for agencies reddit"
+                },
+                "link": {
+                  "type": "string"
+                },
+                "rank": {
+                  "type": "number",
+                  "description": "Position within this section",
+                  "example": 1
+                },
+                "global_rank": {
+                  "type": "number",
+                  "description": "Position across the whole results page",
+                  "example": 1
+                }
+              }
+            }
+          },
+          "ai_overview": {
+            "type": "object",
+            "description": "AI Overview that Google shows for the query. Only present when Google returns one.",
+            "properties": {
+              "text": {
+                "type": "string",
+                "description": "AI Overview as plain text"
+              },
+              "html": {
+                "type": "string",
+                "description": "AI Overview as the raw HTML Google rendered"
+              },
+              "references": {
+                "type": "array",
+                "description": "Sources cited by the AI Overview",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "example": "The Best Laptops Under $1,000 We've Tested for 2026 | PCMag"
+                    },
+                    "url": {
+                      "type": "string",
+                      "nullable": true,
+                      "description": "Source URL. Can be null when Google doesn't expose one",
+                      "example": "https://www.pcmag.com/picks/best-laptops-under-1000"
+                    },
+                    "source": {
+                      "type": "string",
+                      "example": "PCMag"
+                    },
+                    "snippet": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "people_also_ask": {
+            "type": "array",
+            "description": "People Also Ask questions",
+            "items": {
+              "type": "object",
+              "properties": {
+                "question": {
+                  "type": "string",
+                  "example": "What is the best ATS for recruiting agencies?"
+                },
+                "question_link": {
+                  "type": "string"
+                },
+                "question_type": {
+                  "type": "string",
+                  "example": "ai_overview"
+                },
+                "rank": {
+                  "type": "number",
+                  "description": "Position within this section",
+                  "example": 1
+                },
+                "global_rank": {
+                  "type": "number",
+                  "description": "Position across the whole results page",
+                  "example": 1
+                }
+              }
+            }
+          }
+        },
+        "description": "Full Google SERP. Which sections are present depends on what Google returns for the query. With `source` set to `news` or `images`, results are returned under `news` or `images` instead of `organic`."
+      },
+      "SearchSerpResponseDto": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "number",
+            "description": "Timestamp of the request in milliseconds",
+            "example": 1790698941310
+          },
+          "apiStatus": {
+            "type": "string",
+            "description": "API status message",
+            "example": "success",
+            "enum": ["success", "failure"]
+          },
+          "apiCode": {
+            "type": "number",
+            "description": "API status code",
+            "example": 200
+          },
+          "meta": {
+            "description": "Metadata about the search",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SearchMetaDto"
+              }
+            ]
+          },
+          "data": {
+            "description": "Google SERP data (returned when `serp` is `true`)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/SearchSerpDataDto"
+              }
+            ]
+          }
+        },
+        "required": ["timestamp", "apiStatus", "apiCode", "meta", "data"]
+      },
       "SearchRequestDto": {
         "type": "object",
         "properties": {
@@ -6093,20 +6802,27 @@
           },
           "location": {
             "type": "string",
-            "description": "Country code (ISO alpha-2)",
+            "description": "Country code (ISO alpha-2). Can be combined with `city` for city-level targeting; when `city` is set, it takes priority.",
             "example": "us",
             "default": "us"
           },
+          "device": {
+            "type": "string",
+            "description": "Device to emulate when searching. Defaults to desktop.",
+            "enum": ["desktop", "mobile"],
+            "example": "desktop",
+            "default": "desktop"
+          },
           "source": {
             "type": "string",
-            "description": "Search source",
+            "description": "Search source. SERP mode accepts one source per request.",
             "enum": ["web", "news", "images"],
             "example": "web",
             "default": "web"
           },
           "category": {
             "type": "string",
-            "description": "Category filter",
+            "description": "Category filter. Ignored in SERP mode.",
             "enum": ["general", "code", "pdf", "research", "linkedin", "wiki"],
             "example": "code",
             "default": "general"
@@ -6129,19 +6845,19 @@
           },
           "format": {
             "type": "string",
-            "description": "Output format",
+            "description": "Output format. Ignored in SERP mode.",
             "enum": ["json", "markdown", "html"],
             "default": "json"
           },
           "scrape": {
             "type": "boolean",
-            "description": "scrape and extract content from SERP result URLs",
+            "description": "scrape and extract content from SERP result URLs. Ignored in SERP mode.",
             "example": false,
             "default": false
           },
           "scrapeLimit": {
             "type": "number",
-            "description": "Number of URLs to scrape (requires scrape: true)",
+            "description": "Number of URLs to scrape (requires scrape: true). Ignored in SERP mode.",
             "example": 3,
             "default": 3,
             "minimum": 1,
@@ -6149,9 +6865,20 @@
           },
           "groundedAnswer": {
             "type": "boolean",
-            "description": "Use AI to synthesize a grounded answer from search results.",
+            "description": "Use AI to synthesize a grounded answer from search results. Ignored in SERP mode.",
             "example": false,
             "default": false
+          },
+          "serp": {
+            "type": "boolean",
+            "description": "Return the full Google search results page (SERP) including organic results, AI Overviews, related searches, People Also Ask, pagination, and more. Supported in this mode: `query`, `location`, `city`, `device`, `limit`, `source` (one value), `time`, `includeDomains`, and `excludeDomains`. It returns the first page of results.",
+            "example": false,
+            "default": false
+          },
+          "city": {
+            "type": "string",
+            "description": "City to target for localized results, using the name exactly as listed in the supported cities file, e.g. `London,England,United Kingdom`. Works with standard search and with `serp: true`. When set, it takes priority over `location`. Supported cities: https://cdn.geekflare.com/api-assets/geotargets-2026-08-12.json",
+            "example": "London,England,United Kingdom"
           }
         },
         "required": ["query"]

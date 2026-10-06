@@ -31,16 +31,29 @@ class SearchRequestDto(BaseModel):
     query: Annotated[str, Field(strict=True, max_length=2048)] = Field(description="Search query", json_schema_extra={"examples": ["best running shoes"]})
     limit: Optional[Union[Annotated[float, Field(le=100, strict=True, ge=1)], Annotated[int, Field(le=100, strict=True, ge=1)]]] = Field(default=10, description="Number of results", json_schema_extra={"examples": [10]})
     time: Optional[StrictStr] = Field(default='any', description="Time filter (h, d, w, m, y or h2, d7, etc.)", json_schema_extra={"examples": ["d"]})
-    location: Optional[StrictStr] = Field(default='us', description="Country code (ISO alpha-2)", json_schema_extra={"examples": ["us"]})
-    source: Optional[StrictStr] = Field(default='web', description="Search source", json_schema_extra={"examples": ["web"]})
-    category: Optional[StrictStr] = Field(default='general', description="Category filter", json_schema_extra={"examples": ["code"]})
+    location: Optional[StrictStr] = Field(default='us', description="Country code (ISO alpha-2). Can be combined with `city` for city-level targeting; when `city` is set, it takes priority.", json_schema_extra={"examples": ["us"]})
+    device: Optional[StrictStr] = Field(default='desktop', description="Device to emulate when searching. Defaults to desktop.", json_schema_extra={"examples": ["desktop"]})
+    source: Optional[StrictStr] = Field(default='web', description="Search source. SERP mode accepts one source per request.", json_schema_extra={"examples": ["web"]})
+    category: Optional[StrictStr] = Field(default='general', description="Category filter. Ignored in SERP mode.", json_schema_extra={"examples": ["code"]})
     include_domains: Optional[List[StrictStr]] = Field(default=None, description="Include only these domains", alias="includeDomains", json_schema_extra={"examples": [["reddit.com", "stackoverflow.com"]]})
     exclude_domains: Optional[List[StrictStr]] = Field(default=None, description="Exclude these domains", alias="excludeDomains", json_schema_extra={"examples": [["pinterest.com"]]})
-    format: Optional[StrictStr] = Field(default='json', description="Output format")
-    scrape: Optional[StrictBool] = Field(default=False, description="scrape and extract content from SERP result URLs", json_schema_extra={"examples": [False]})
-    scrape_limit: Optional[Union[Annotated[float, Field(le=10, strict=True, ge=1)], Annotated[int, Field(le=10, strict=True, ge=1)]]] = Field(default=3, description="Number of URLs to scrape (requires scrape: true)", alias="scrapeLimit", json_schema_extra={"examples": [3]})
-    grounded_answer: Optional[StrictBool] = Field(default=False, description="Use AI to synthesize a grounded answer from search results.", alias="groundedAnswer", json_schema_extra={"examples": [False]})
-    __properties: ClassVar[List[str]] = ["query", "limit", "time", "location", "source", "category", "includeDomains", "excludeDomains", "format", "scrape", "scrapeLimit", "groundedAnswer"]
+    format: Optional[StrictStr] = Field(default='json', description="Output format. Ignored in SERP mode.")
+    scrape: Optional[StrictBool] = Field(default=False, description="scrape and extract content from SERP result URLs. Ignored in SERP mode.", json_schema_extra={"examples": [False]})
+    scrape_limit: Optional[Union[Annotated[float, Field(le=10, strict=True, ge=1)], Annotated[int, Field(le=10, strict=True, ge=1)]]] = Field(default=3, description="Number of URLs to scrape (requires scrape: true). Ignored in SERP mode.", alias="scrapeLimit", json_schema_extra={"examples": [3]})
+    grounded_answer: Optional[StrictBool] = Field(default=False, description="Use AI to synthesize a grounded answer from search results. Ignored in SERP mode.", alias="groundedAnswer", json_schema_extra={"examples": [False]})
+    serp: Optional[StrictBool] = Field(default=False, description="Return the full Google search results page (SERP) including organic results, AI Overviews, related searches, People Also Ask, pagination, and more. Supported in this mode: `query`, `location`, `city`, `device`, `limit`, `source` (one value), `time`, `includeDomains`, and `excludeDomains`. It returns the first page of results.", json_schema_extra={"examples": [False]})
+    city: Optional[StrictStr] = Field(default=None, description="City to target for localized results, using the name exactly as listed in the supported cities file, e.g. `London,England,United Kingdom`. Works with standard search and with `serp: true`. When set, it takes priority over `location`. Supported cities: https://cdn.geekflare.com/api-assets/geotargets-2026-08-12.json", json_schema_extra={"examples": ["London,England,United Kingdom"]})
+    __properties: ClassVar[List[str]] = ["query", "limit", "time", "location", "device", "source", "category", "includeDomains", "excludeDomains", "format", "scrape", "scrapeLimit", "groundedAnswer", "serp", "city"]
+
+    @field_validator('device')
+    def device_validate_enum(cls, value):
+        """Validates the enum"""
+        if value is None:
+            return value
+
+        if value not in set(['desktop', 'mobile']):
+            raise ValueError("must be one of enum values ('desktop', 'mobile')")
+        return value
 
     @field_validator('source')
     def source_validate_enum(cls, value):
@@ -127,6 +140,7 @@ class SearchRequestDto(BaseModel):
             "limit": obj.get("limit") if obj.get("limit") is not None else 10,
             "time": obj.get("time") if obj.get("time") is not None else 'any',
             "location": obj.get("location") if obj.get("location") is not None else 'us',
+            "device": obj.get("device") if obj.get("device") is not None else 'desktop',
             "source": obj.get("source") if obj.get("source") is not None else 'web',
             "category": obj.get("category") if obj.get("category") is not None else 'general',
             "includeDomains": obj.get("includeDomains"),
@@ -134,7 +148,9 @@ class SearchRequestDto(BaseModel):
             "format": obj.get("format") if obj.get("format") is not None else 'json',
             "scrape": obj.get("scrape") if obj.get("scrape") is not None else False,
             "scrapeLimit": obj.get("scrapeLimit") if obj.get("scrapeLimit") is not None else 3,
-            "groundedAnswer": obj.get("groundedAnswer") if obj.get("groundedAnswer") is not None else False
+            "groundedAnswer": obj.get("groundedAnswer") if obj.get("groundedAnswer") is not None else False,
+            "serp": obj.get("serp") if obj.get("serp") is not None else False,
+            "city": obj.get("city")
         })
         return _obj
 
